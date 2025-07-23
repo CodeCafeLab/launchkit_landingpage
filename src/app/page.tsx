@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -36,6 +35,8 @@ import image1 from './CF-FF_ADS_CAROUSEL-1080-x-1080-px-2-e1745984599904-1024x99
 import image2 from './CF-FF_ADS_CAROUSEL-1080-x-1080-px-5-1-1-1024x855.webp'
 import image3 from './CF-FF_ADS_CAROUSEL.webp'
 import image4 from './FF-FULLVIEW1-e1746439033331-1536x1395.webp'
+import client from './client2.jpeg'
+
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -71,18 +72,18 @@ const whyChooseUs = [
 ];
 
 const techStack = [
-    { name: 'React', hint: 'React logo' },
-    { name: 'Node.js', hint: 'Nodejs logo' },
-    { name: 'Next.js', hint: 'Nextjs logo' },
-    { name: 'MongoDB', hint: 'MongoDB logo' },
-    { name: 'MySQL', hint: 'MySQL logo' },
-    { name: 'GraphQL', hint: 'GraphQL logo' },
-    { name: 'TypeScript', hint: 'TypeScript logo' },
-    { name: 'Docker', hint: 'Docker logo' },
-    { name: 'Kubernetes', hint: 'Kubernetes logo' },
-    { name: 'AWS', hint: 'AWS logo' },
-    { name: 'Google Cloud', hint: 'Google Cloud logo' },
-    { name: 'Firebase', hint: 'Firebase logo' },
+    { name: 'React', icon: 'https://cdn.worldvectorlogo.com/logos/react-2.svg', hint: 'React logo' },
+    { name: 'Node.js', icon: 'https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg', hint: 'Nodejs logo' },
+    { name: 'Next.js', icon: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', hint: 'Nextjs logo' },
+    { name: 'MongoDB', icon: 'https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg', hint: 'MongoDB logo' },
+    { name: 'MySQL', icon: 'https://cdn.worldvectorlogo.com/logos/mysql-6.svg', hint: 'MySQL logo' },
+    { name: 'GraphQL', icon: 'https://cdn.worldvectorlogo.com/logos/graphql.svg', hint: 'GraphQL logo' },
+    { name: 'TypeScript', icon: 'https://cdn.worldvectorlogo.com/logos/typescript.svg', hint: 'TypeScript logo' },
+    { name: 'Docker', icon: 'https://cdn.worldvectorlogo.com/logos/docker.svg', hint: 'Docker logo' },
+    { name: 'Kubernetes', icon: 'https://cdn.worldvectorlogo.com/logos/kubernetes.svg', hint: 'Kubernetes logo' },
+    { name: 'AWS', icon: 'https://cdn.worldvectorlogo.com/logos/aws-2.svg', hint: 'AWS logo' },
+    { name: 'Google Cloud', icon: 'https://cdn.worldvectorlogo.com/logos/google-cloud-1.svg', hint: 'Google Cloud logo' },
+    { name: 'Firebase', icon: 'https://cdn.worldvectorlogo.com/logos/firebase-1.svg', hint: 'Firebase logo' },
 ];
 
 const industries = ["EdTech", "FinTech", "Healthcare", "Logistics", "E-commerce", "SaaS", "Real Estate", "Travel"];
@@ -223,7 +224,7 @@ export default function Home() {
             <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60 grayscale">
               {[1, 2, 3, 4, 5, 6].map(i => (
-                <Image key={i} src={`https://placehold.co/120x60.png/`} alt={`Client Logo ${i}`} width={120} height={60} data-ai-hint="company logo" />
+                <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={60} data-ai-hint="company logo" />
               ))}
             </div>
           </div>
@@ -320,29 +321,35 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <Image src="https://placehold.co/600x450.png" alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
+                <Image src={image3} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
               </div>
             </div>
           </div>
         </section>
+        
+        <section>
+          <div className="container mx-auto px-4 flex justify-center items-center">
+            <Image src={image2} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
+          </div>
+        </section>
 
         <section className="w-full py-16 md:py-24 bg-secondary/20" id="tech-stack">
-          <div className="container mx-auto px-4">
-            <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
-            </div>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
-              {techStack.map(tech => (
-                <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
-                  <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
-                     <Image src={`https://placehold.co/64x64.png`} alt={`${tech.name} logo`} width={40} height={40} data-ai-hint={tech.hint} />
-                  </div>
-                  <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
+            <div className="container mx-auto px-4">
+                <div className="text-center space-y-4 mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
                 </div>
-              ))}
+                <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
+                    {techStack.map(tech => (
+                        <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
+                            <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
+                                <Image src={tech.icon} alt={`${tech.name} logo`} width={40} height={40} data-ai-hint={tech.hint} />
+                            </div>
+                            <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
-          </div>
         </section>
 
         <section className="w-full py-16 md:py-24" id="industries">
@@ -401,6 +408,12 @@ export default function Home() {
               <CarouselPrevious />
               <CarouselNext />
             </Carousel>
+          </div>
+        </section>
+
+        <section>
+          <div className="container mx-auto px-4 flex justify-center items-center">
+            <Image src={image1} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
           </div>
         </section>
 
@@ -577,4 +590,3 @@ export default function Home() {
   );
 }
 
-    
