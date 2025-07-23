@@ -140,8 +140,11 @@ export default function Home() {
     }
   }
 
-  const handleCtaClick = () => {
+  const handleBookDemoClick = () => {
     document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' });
+    if (isMobileMenuOpen) {
+      setMobileMenuOpen(false);
+    }
   }
 
   const navLinks = [
@@ -165,7 +168,7 @@ export default function Home() {
               {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
             </nav>
             <div className="hidden md:block ml-4">
-              <Button onClick={() => setPaymentModalOpen(true)}>Book a Free Demo</Button>
+              <Button onClick={handleBookDemoClick}>Book a Free Demo</Button>
             </div>
             <div className="md:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -188,7 +191,7 @@ export default function Home() {
                         </a>
                       ))}
                     </nav>
-                    <Button onClick={() => { setPaymentModalOpen(true); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
+                    <Button onClick={handleBookDemoClick} className="mt-auto">Book a Free Demo</Button>
                   </div>
                 </SheetContent>
               </Sheet>
@@ -209,7 +212,7 @@ export default function Home() {
                   Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups & businesses.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button size="lg" onClick={() => setPaymentModalOpen(true)}>
+                  <Button size="lg" onClick={handleBookDemoClick}>
                     Book a Free Demo <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                   <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -605,3 +608,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
