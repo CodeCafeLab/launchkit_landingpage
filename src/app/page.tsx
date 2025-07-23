@@ -8,7 +8,7 @@ import { z } from "zod";
 import Image from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck
+  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
@@ -52,29 +52,49 @@ const services = [
     { icon: <PenTool className="h-8 w-8 text-primary" />, title: "UI/UX Design", description: "Crafting intuitive and engaging user experiences that drive conversions and delight users." },
     { icon: <Code className="h-8 w-8 text-primary" />, title: "Web App Development", description: "Robust and scalable web applications built with modern frameworks like React and Next.js." },
     { icon: <Cloud className="h-8 w-8 text-primary" />, title: "DevOps and Cloud", description: "Streamlining your development and deployment process for faster, more reliable releases." },
-    { icon: <BrainCircuit className="h-8 w-8 text-primary" />, title: "AI & ML", description: "Integrate intelligent features into your products with our expertise in AI and Machine Learning." },
+    { icon: <BrainCircuit className="h-8 w-8 text-primary" />, title: "AI & ML Integration", description: "Leverage the power of AI to build intelligent, data-driven applications." },
 ];
 
 const whyChooseUs = [
-    { icon: <Lightbulb className="h-8 w-8 text-primary" />, title: "Agile Approach", description: "We use agile methodologies to deliver high-quality software quickly and efficiently." },
-    { icon: <Star className="h-8 w-8 text-primary" />, title: "Tech Experts", description: "Our team of experienced engineers are experts in the latest technologies and best practices." },
-    { icon: <Scaling className="h-8 w-8 text-primary" />, title: "Affordable Pricing", description: "We offer competitive pricing to help you build your dream product without breaking the bank." },
+    { icon: <FastForward className="h-8 w-8 text-primary" />, title: "Agile Approach", description: "We use agile methodologies to deliver high-quality software quickly and efficiently." },
+    { icon: <UserCheck className="h-8 w-8 text-primary" />, title: "Tech Experts", description: "Our team of experienced engineers are experts in the latest technologies and best practices." },
+    { icon: <DollarSign className="h-8 w-8 text-primary" />, title: "Affordable Pricing", description: "We offer competitive pricing to help you build your dream product without breaking the bank." },
     { icon: <Eye className="h-8 w-8 text-primary" />, title: "Transparent Communication", description: "We believe in open and honest communication, keeping you updated every step of the way." },
+    { icon: <Scaling className="h-8 w-8 text-primary" />, title: "Scalable Solutions", description: "We build solutions that can grow with your business, ensuring long-term success." },
+    { icon: <Server className="h-8 w-8 text-primary" />, title: "Dedicated Support", description: "Our team is here to support you, providing maintenance and assistance whenever you need it." },
 ];
 
-const industries = [ "EdTech", "FinTech", "Healthcare", "Logistics", "E-commerce", "SaaS" ];
+const techStack = [
+  { name: 'React', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="React" data-ai-hint="React logo"/> },
+  { name: 'Node.js', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Node.js" data-ai-hint="Nodejs logo"/> },
+  { name: 'Next.js', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Next.js" data-ai-hint="Nextjs logo"/> },
+  { name: 'MongoDB', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="MongoDB" data-ai-hint="MongoDB logo"/> },
+  { name: 'MySQL', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="MySQL" data-ai-hint="MySQL logo"/> },
+  { name: 'GraphQL', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="GraphQL" data-ai-hint="GraphQL logo"/> },
+  { name: 'TypeScript', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="TypeScript" data-ai-hint="TypeScript logo"/> },
+  { name: 'Docker', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Docker" data-ai-hint="Docker logo"/> },
+  { name: 'Kubernetes', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Kubernetes" data-ai-hint="Kubernetes logo"/> },
+  { name: 'AWS', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="AWS" data-ai-hint="AWS logo"/> },
+  { name: 'Google Cloud', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Google Cloud" data-ai-hint="GCP logo"/> },
+  { name: 'Firebase', icon: <Image src="https://placehold.co/40x40.png" width={40} height={40} alt="Firebase" data-ai-hint="Firebase logo"/> },
+];
+
+const industries = [ "EdTech", "FinTech", "Healthcare", "Logistics", "E-commerce", "SaaS", "Real Estate", "Travel" ];
 
 const testimonials = [
   { quote: "Working with CodeCafe Labs was a game-changer for our business. Their team is incredibly talented and delivered a product that exceeded all our expectations. Highly recommended!", name: "Priya Sharma", company: "Founder, Edutech Innovations", avatar: "https://placehold.co/100x100.png", hint: "woman portrait" },
   { quote: "The professionalism and technical expertise of the CodeCafe Labs team are top-notch. They transformed our vision into a reality with a seamless and efficient process.", name: "Rohan Gupta", company: "CEO, HealthFirst", avatar: "https://placehold.co/100x100.png", hint: "man portrait" },
   { quote: "I'm so impressed with the final product. The UI/UX is fantastic, and the app is incredibly fast and responsive. I couldn't be happier with the results.", name: "Anjali Mehta", company: "Product Manager, FinConnect", avatar: "https://placehold.co/100x100.png", hint: "woman face" },
+  { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at CodeCafe was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
 ];
 
 const faqs = [
     { q: "What is your development process?", a: "We follow an agile development process that allows us to deliver high-quality software in short iterations. This includes discovery, design, development, testing, and deployment, with continuous feedback loops." },
     { q: "How much will my project cost?", a: "The cost of a project depends on its scope and complexity. We provide a detailed estimate after an initial discovery call where we understand your requirements. Our goal is to offer affordable and transparent pricing." },
     { q: "How long will it take to build my app?", a: "Timelines vary based on project complexity. A simple MVP might take 2-3 months, while a more feature-rich application could take 6 months or longer. We'll provide a detailed project timeline upfront." },
-    { q: "Do you offer post-launch support?", a: "Yes, we offer ongoing support and maintenance packages to ensure your application runs smoothly and stays up-to-date with the latest security patches and technology updates." }
+    { q: "Do you offer post-launch support?", a: "Yes, we offer ongoing support and maintenance packages to ensure your application runs smoothly and stays up-to-date with the latest security patches and technology updates." },
+    { q: "Can you work with my existing team?", a: "Absolutely. We are happy to collaborate with your in-house team to augment your existing capabilities and ensure a smooth project delivery." },
+    { q: "What makes CodeCafe Labs different from other agencies?", a: "Our key differentiators are our deep technical expertise, our commitment to transparent communication, and our focus on building long-term partnerships. We don't just build software; we build solutions that drive business growth." }
 ];
 
 export default function Home() {
@@ -190,7 +210,7 @@ export default function Home() {
             <div className="container mx-auto px-4">
                 <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
                 <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60 grayscale">
-                    {[1, 2, 3, 4, 5].map(i => (
+                    {[1, 2, 3, 4, 5, 6].map(i => (
                         <Image key={i} src={`https://placehold.co/120x60.png/`} alt={`Client Logo ${i}`} width={120} height={60} data-ai-hint="company logo" />
                     ))}
                 </div>
@@ -201,7 +221,7 @@ export default function Home() {
             <div className="container mx-auto px-4">
                  <div className="text-center space-y-4 mb-12">
                      <h2 className="text-3xl md:text-4xl font-bold font-headline">Build, Launch & Grow with Our Services</h2>
-                     <p className="text-muted-foreground max-w-2xl mx-auto">We offer a complete suite of services to bring your digital products to life.</p>
+                     <p className="text-muted-foreground max-w-2xl mx-auto">We offer a complete suite of services to bring your digital products to life, from initial concept to launch and beyond.</p>
                  </div>
                  <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                      {services.map((service) => (
@@ -221,9 +241,9 @@ export default function Home() {
             <div className="container mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <div className="space-y-6">
-                        <h2 className="text-3xl md:text-4xl font-bold font-headline">Why CodeCafe Labs?</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose CodeCafe Labs?</h2>
                         <p className="text-muted-foreground">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
-                        <div className="grid gap-6 sm:grid-cols-1">
+                        <div className="grid gap-6 sm:grid-cols-2">
                             {whyChooseUs.map(item => (
                                 <div key={item.title} className="flex items-start gap-4">
                                     <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">{item.icon}</div>
@@ -242,7 +262,24 @@ export default function Home() {
             </div>
         </section>
         
-        <section className="w-full py-16 md:py-24" id="industries">
+        <section className="w-full py-16 md:py-24" id="tech-stack">
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
+            </div>
+            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-6">
+              {techStack.map(tech => (
+                <div key={tech.name} className="flex flex-col items-center gap-2 text-center grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all">
+                  {tech.icon}
+                  <p className="text-sm font-medium text-muted-foreground">{tech.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full py-16 md:py-24 bg-secondary/20" id="industries">
             <div className="container mx-auto px-4">
                 <div className="text-center space-y-4 mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold font-headline">We've Worked With</h2>
@@ -259,7 +296,7 @@ export default function Home() {
         </section>
 
 
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="testimonials">
+        <section className="w-full py-16 md:py-24" id="testimonials">
           <div className="container mx-auto px-4">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">What Our Clients Say</h2>
@@ -423,3 +460,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
