@@ -8,7 +8,7 @@ import { z } from "zod";
 import Image from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart
+  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart, Rocket
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
@@ -88,10 +88,10 @@ const techStack = [
 const industries = ["EdTech", "FinTech", "Healthcare", "Logistics", "E-commerce", "SaaS", "Real Estate", "Travel"];
 
 const testimonials = [
-  { quote: "Working with CodeCafe Labs was a game-changer for our business. Their team is incredibly talented and delivered a product that exceeded all our expectations. Highly recommended!", name: "Priya Sharma", company: "Founder, Edutech Innovations", avatar: "https://placehold.co/100x100.png", hint: "woman portrait" },
-  { quote: "The professionalism and technical expertise of the CodeCafe Labs team are top-notch. They transformed our vision into a reality with a seamless and efficient process.", name: "Rohan Gupta", company: "CEO, HealthFirst", avatar: "https://placehold.co/100x100.png", hint: "man portrait" },
+  { quote: "Working with LaunchKit was a game-changer for our business. Their team is incredibly talented and delivered a product that exceeded all our expectations. Highly recommended!", name: "Priya Sharma", company: "Founder, Edutech Innovations", avatar: "https://placehold.co/100x100.png", hint: "woman portrait" },
+  { quote: "The professionalism and technical expertise of the LaunchKit team are top-notch. They transformed our vision into a reality with a seamless and efficient process.", name: "Rohan Gupta", company: "CEO, HealthFirst", avatar: "https://placehold.co/100x100.png", hint: "man portrait" },
   { quote: "I'm so impressed with the final product. The UI/UX is fantastic, and the app is incredibly fast and responsive. I couldn't be happier with the results.", name: "Anjali Mehta", company: "Product Manager, FinConnect", avatar: "https://placehold.co/100x100.png", hint: "woman face" },
-  { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at CodeCafe was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
+  { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at LaunchKit was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
 ];
 
 const faqs = [
@@ -140,7 +140,7 @@ export default function Home() {
     }
   }
 
-  const handleBookDemoClick = () => {
+  const handleBuyNowClick = () => {
     document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' });
     if (isMobileMenuOpen) {
       setMobileMenuOpen(false);
@@ -160,15 +160,15 @@ export default function Home() {
       <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <a href="#hero" className="flex items-center gap-2">
-            <Code className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
+            <Rocket className="h-7 w-7 text-primary" />
+            <span className="text-xl font-bold font-headline">LaunchKit</span>
           </a>
           <div className="flex items-center gap-2">
             <nav className="hidden md:flex items-center gap-6">
               {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
             </nav>
             <div className="hidden md:block ml-4">
-              <Button onClick={handleBookDemoClick}>Book a Free Demo</Button>
+              <Button onClick={handleBuyNowClick}>Buy Now</Button>
             </div>
             <div className="md:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -181,8 +181,8 @@ export default function Home() {
                 <SheetContent side="right" className="w-[280px] bg-background">
                   <div className="flex flex-col h-full p-4">
                     <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
-                      <Code className="h-8 w-8 text-primary" />
-                      <span className="text-2xl font-bold font-headline">CodeCafe Labs</span>
+                      <Rocket className="h-8 w-8 text-primary" />
+                      <span className="text-2xl font-bold font-headline">LaunchKit</span>
                     </a>
                     <nav className="flex flex-col gap-6 text-lg">
                       {navLinks.map(link => (
@@ -191,7 +191,7 @@ export default function Home() {
                         </a>
                       ))}
                     </nav>
-                    <Button onClick={handleBookDemoClick} className="mt-auto">Book a Free Demo</Button>
+                    <Button onClick={handleBuyNowClick} className="mt-auto">Buy Now</Button>
                   </div>
                 </SheetContent>
               </Sheet>
@@ -206,14 +206,14 @@ export default function Home() {
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter">
-                  Empower Your Business with <span className="text-primary">CodeCafe Labs</span>
+                  Empower Your Business with <span className="text-primary">LaunchKit</span>
                 </h1>
                 <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
                   Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups & businesses.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button size="lg" onClick={handleBookDemoClick}>
-                    Book a Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+                  <Button size="lg" onClick={handleBuyNowClick}>
+                    Buy Now <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                   <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
                     Explore More
@@ -266,7 +266,7 @@ export default function Home() {
               </div>
               <div className="space-y-8">
                 <div className="text-left space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose CodeCafe Labs?</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose LaunchKit?</h2>
                   <p className="text-muted-foreground max-w-2xl">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
                 </div>
                 <div className="space-y-6">
@@ -345,7 +345,7 @@ export default function Home() {
                       <Card className="bg-card border h-full flex flex-col">
                         <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
                           <Star className="w-5 h-5 text-yellow-400 mb-4" />
-                          <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote}"</p>
+                          <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote.replace(/CodeCafe Labs/g, 'LaunchKit')}"</p>
                           <div className="flex items-center gap-4">
                             <Avatar>
                               <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
@@ -379,7 +379,7 @@ export default function Home() {
                   No subscriptions, No hassle. Love it or get your money back within 7 days.
                 </p>
                 <div className="p-4 bg-background border rounded-lg">
-                  <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@codecafelabs.com" className="text-primary hover:underline">support@codecafelabs.com</a> for help</p>
+                  <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@launchkit.com" className="text-primary hover:underline">support@launchkit.com</a> for help</p>
                 </div>
               </div>
               <Card className="bg-card border shadow-2xl shadow-primary/10">
@@ -423,7 +423,7 @@ export default function Home() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary p-8 md:p-12 rounded-lg border">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with CodeCafe Labs?</h2>
+                <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with LaunchKit?</h2>
                 <p className="text-muted-foreground">Let's discuss your project over a free demo call. Fill out the form, and our team will get back to you within 24 hours.</p>
                 <div className="border-t border-border pt-6 space-y-4">
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> Submit the form with your project idea.</div>
@@ -500,7 +500,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-8 md:px-6">
           <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
             <div className="md:col-span-1">
-              <h4 className="font-semibold text-lg mb-4">About CodeCafe Labs</h4>
+              <h4 className="font-semibold text-lg mb-4">About LaunchKit</h4>
               <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences that drive business growth.</p>
             </div>
             <div>
@@ -513,7 +513,7 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Contact</h4>
-              <a href="mailto:contact@codecafelabs.com" className="text-sm text-muted-foreground hover:text-primary block">contact@codecafelabs.com</a>
+              <a href="mailto:contact@launchkit.com" className="text-sm text-muted-foreground hover:text-primary block">contact@launchkit.com</a>
               <a href="tel:+919876543210" className="text-sm text-muted-foreground hover:text-primary block">+91 98765 43210</a>
             </div>
             <div>
@@ -528,7 +528,7 @@ export default function Home() {
           </div>
           <div className="border-t border-border mt-8 pt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} CodeCafe Labs. All rights reserved.
+              © {new Date().getFullYear()} LaunchKit. All rights reserved.
             </p>
           </div>
         </div>
@@ -608,5 +608,3 @@ export default function Home() {
     </div>
   );
 }
-
-    

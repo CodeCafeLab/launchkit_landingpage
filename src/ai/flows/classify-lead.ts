@@ -1,7 +1,8 @@
+
 'use server';
 
 /**
- * @fileOverview Classifies and prioritizes leads submitted through the contact form for CodeCafe Labs.
+ * @fileOverview Classifies and prioritizes leads submitted through the contact form for LaunchKit.
  *
  * - classifyLead - A function that handles the lead classification process.
  * - ClassifyLeadInput - The input type for the classifyLead function.
@@ -43,7 +44,7 @@ const classifyLeadPrompt = ai.definePrompt({
   name: 'classifyLeadPrompt',
   input: {schema: ClassifyLeadInputSchema},
   output: {schema: ClassifyLeadOutputSchema},
-  prompt: `You are an AI assistant for CodeCafe Labs, a web development agency. Your task is to classify incoming leads from the website's contact form.
+  prompt: `You are an AI assistant for LaunchKit, a web development agency. Your task is to classify incoming leads from the website's contact form.
 
   Your goal is to determine if a lead is of High, Medium, or Low priority.
 

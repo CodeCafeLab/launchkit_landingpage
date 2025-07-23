@@ -4,13 +4,13 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'CodeCafe Labs - Custom Web App Development India',
-  description: 'Launch your MVP faster with CodeCafe Labs. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
+  title: 'LaunchKit - Custom Web App Development India',
+  description: 'Launch your MVP faster with LaunchKit. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
   openGraph: {
-    title: 'CodeCafe Labs - Custom Web App Development India',
-    description: 'Launch your MVP faster with CodeCafe Labs. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
-    url: 'https://codecafelabs.com',
-    siteName: 'CodeCafe Labs',
+    title: 'LaunchKit - Custom Web App Development India',
+    description: 'Launch your MVP faster with LaunchKit. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
+    url: 'https://launchkit.dev',
+    siteName: 'LaunchKit',
     images: [
       {
         url: 'https://placehold.co/1200x630.png', // Replace with your actual OG image
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CodeCafe Labs - Custom Web App Development India',
-    description: 'Launch your MVP faster with CodeCafe Labs. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
+    title: 'LaunchKit - Custom Web App Development India',
+    description: 'Launch your MVP faster with LaunchKit. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
     // creator: '@yourtwitterhandle', // Replace with your Twitter handle
     images: ['https://placehold.co/1200x630.png'], // Replace with your actual OG image
   },
@@ -51,5 +51,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-    
