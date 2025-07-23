@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import React, { useState } from "react";
@@ -252,7 +251,7 @@ export default function Home() {
               {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
             </nav>
             <div className="hidden md:block ml-4">
-              <Button onClick={handleCtaClick}>Book a Free Demo</Button>
+              <Button onClick={() => setPaymentModalOpen(true)}>Book a Free Demo</Button>
             </div>
             <div className="md:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -275,7 +274,7 @@ export default function Home() {
                         </a>
                       ))}
                     </nav>
-                    <Button onClick={() => { handleCtaClick(); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
+                    <Button onClick={() => { setPaymentModalOpen(true); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
                   </div>
                 </SheetContent>
               </Sheet>
@@ -291,10 +290,10 @@ export default function Home() {
               Empower Your Business with <span className="text-primary">CodeCafe Labs</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              We build future-ready digital solutions that drive growth, innovation, and success for your business.
+              Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups & businesses.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={handleCtaClick}>
+              <Button size="lg" onClick={() => setPaymentModalOpen(true)}>
                 Book a Free Demo <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -434,7 +433,7 @@ export default function Home() {
         <section className="w-full py-16 md:py-24" id="industries">
           <div className="container mx-auto px-4">
             <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">We've Worked With</h2>
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">We’ve Worked With</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">Our expertise spans across various industries, delivering tailored solutions that meet specific market needs.</p>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
@@ -524,6 +523,10 @@ export default function Home() {
                       <Button type="submit" disabled={isSubmitting} className="w-full !mt-6" size="lg">
                         {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing...</> : "Submit Request"}
                       </Button>
+                      <p className="text-xs text-center text-muted-foreground pt-2">
+                        <ShieldCheck className="inline-block h-4 w-4 mr-1" />
+                        Your data is 100% safe with us. We'll reach out in 24 hours.
+                      </p>
                     </form>
                   </Form>
                 </CardContent>
@@ -559,12 +562,12 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
             <div>
               <h4 className="font-semibold text-lg mb-4">About CodeCafe Labs</h4>
-              <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences.</p>
+              <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences that drive business growth.</p>
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Contact</h4>
               <a href="mailto:contact@codecafelabs.com" className="text-sm text-muted-foreground hover:text-primary block">contact@codecafelabs.com</a>
-              <a href="tel:+1234567890" className="text-sm text-muted-foreground hover:text-primary block">+1 (234) 567-890</a>
+              <a href="tel:+919876543210" className="text-sm text-muted-foreground hover:text-primary block">+91 98765 43210</a>
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Follow Us</h4>
@@ -615,7 +618,7 @@ export default function Home() {
           <DialogHeader>
             <DialogTitle>Complete Your Purchase</DialogTitle>
             <DialogDescription>
-              You're choosing the Lifetime Access plan for <strong>₹549</strong>.
+              You're choosing the Lifetime Access plan for <strong>₹549</strong>. No credit card required for demo.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -658,3 +661,5 @@ export default function Home() {
     </div>
   );
 }
+
+    

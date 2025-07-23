@@ -1,10 +1,34 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'CodeCafe Labs - Smart Tech Solutions for Modern Businesses',
-  description: 'Empower Your Business with CodeCafe Labs. We provide full stack development, product engineering, mobile apps, UI/UX design, and DevOps services.',
+  title: 'CodeCafe Labs - Custom Web App Development India',
+  description: 'Launch your MVP faster with CodeCafe Labs. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
+  openGraph: {
+    title: 'CodeCafe Labs - Custom Web App Development India',
+    description: 'Launch your MVP faster with CodeCafe Labs. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
+    url: 'https://codecafelabs.com',
+    siteName: 'CodeCafe Labs',
+    images: [
+      {
+        url: 'https://placehold.co/1200x630.png', // Replace with your actual OG image
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CodeCafe Labs - Custom Web App Development India',
+    description: 'Launch your MVP faster with CodeCafe Labs. We offer full stack development, product engineering, mobile apps, and UI/UX design to help you build and scale.',
+    // creator: '@yourtwitterhandle', // Replace with your Twitter handle
+    images: ['https://placehold.co/1200x630.png'], // Replace with your actual OG image
+  },
+  keywords: ['hire full stack development team', 'custom web app development India', 'best MVP development agency', 'product engineering services', 'mobile app development company'],
 };
 
 export default function RootLayout({
@@ -27,3 +51,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+    
