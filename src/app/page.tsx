@@ -8,10 +8,10 @@ import { z } from "zod";
 import Image from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart, Rocket
+  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart, Rocket, MinusCircle
 } from "lucide-react";
 
-import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
+import { classifyLead, type ClassifyLeadInput, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -33,7 +33,6 @@ import {
 } from "@/components/ui/carousel"
 
 import image1 from './CF-FF_ADS_CAROUSEL-1080-x-1080-px-2-e1745984599904-1024x996.webp'
-import image2 from './CF-FF_ADS_CAROUSEL-1080-x-1080-px-5-1-1-1024x855.webp'
 import image3 from './CF-FF_ADS_CAROUSEL.webp'
 import image4 from './FF-FULLVIEW1-e1746439033331-1536x1395.webp'
 import client from './client2.jpeg'
@@ -100,6 +99,14 @@ const faqs = [
   { q: "How long will it take to build my app?", a: "Timelines vary based on project complexity. A simple MVP might take 2-3 months, while a more feature-rich application could take 6 months or longer. We'll provide a detailed project timeline upfront." },
   { q: "Do you offer post-launch support?", a: "Yes, we offer ongoing support and maintenance packages to ensure your application runs smoothly and stays up-to-date with the latest security patches and technology updates." },
   { q: "Can you work with my existing team?", a: "Absolutely. We are happy to collaborate with your in-house team to augment your existing capabilities and ensure a smooth project delivery." },
+];
+
+const beforeData = [
+  { item: 'Web Design', deadline: '12/6/2025', task: 'Homepage Redesign', status: '...', notes: 'Hosting expired', priority: 'High' },
+  { item: 'Clients', deadline: '15/11/23', task: 'SEO Audit', status: 'Paid', notes: 'Keywords missing', priority: 'Urgent' },
+  { item: 'Aarav Mehta', deadline: '11/20/2025', task: 'Social Media', status: 'Unpaid', notes: 'Need 10 reels', priority: 'High' },
+  { item: 'Naina Reddy', deadline: '-', task: '...', status: '...', notes: 'Logo draft not shared', priority: '???' },
+  { item: 'Rohan Kapoor', deadline: '30-11-2023', task: 'Blog Writing', status: 'Pending', notes: 'Topic: AI trends', priority: 'Medium' },
 ];
 
 export default function Home() {
@@ -221,27 +228,83 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex justify-center items-center">
-                 <Image src={image3} alt="Code snippet" width={800} height={600} className="rounded-lg shadow-2xl mx-auto object-cover" data-ai-hint="code on screen" />
+                <Image src={image3} alt="Code snippet" width={800} height={600} className="rounded-lg shadow-2xl mx-auto object-cover" data-ai-hint="code on screen" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12" id="trusted-by">
-          <div className="container mx-auto px-4 md:px-6">
-            <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60">
-              {[1, 2, 3, 4, 5, 6].map(i => (
-                <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={40} className="object-contain" data-ai-hint="company logo" />
-              ))}
+        <section className="w-full py-16 md:py-24 text-center">
+          <div className="container mx-auto px-4 md:px-6 space-y-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold text-red-500">Chasing payments &amp; missed deadlines...</h3>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold text-green-500">Everything managed in One Dashboard!</h3>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Before Card */}
+              <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
+                <h3 className="text-3xl font-bold text-red-500 mb-4 text-center">BEFORE</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="p-2 font-semibold">Item</th>
+                          <th className="p-2 font-semibold">Deadline</th>
+                          <th className="p-2 font-semibold">Task</th>
+                          <th className="p-2 font-semibold">Status</th>
+                          <th className="p-2 font-semibold">Notes</th>
+                          <th className="p-2 font-semibold">Priority</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {beforeData.map((row, i) => (
+                          <tr key={i} className="border-b last:border-0">
+                            <td className="p-2">{row.item}</td>
+                            <td className="p-2">{row.deadline}</td>
+                            <td className="p-2">{row.task}</td>
+                            <td className="p-2">{row.status}</td>
+                            <td className="p-2">{row.notes}</td>
+                            <td className="p-2 font-bold text-red-600">{row.priority}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <ul className="mt-6 space-y-3 font-semibold text-lg text-red-700">
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>2 hours/day on messy Excel sheets</span></li>
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Late payments &amp; client fights</span></li>
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Overwhelmed by 50+ tasks daily</span></li>
+                </ul>
+              </div>
+
+              {/* After Card */}
+              <div className="bg-green-100 border-2 border-green-500 rounded-2xl p-6 text-left">
+                <h3 className="text-3xl font-bold text-green-500 mb-4 text-center">AFTER</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                  <Image src={image4} alt="Freelancer Flow Dashboard" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+                </div>
+                <ul className="mt-6 space-y-3 font-semibold text-lg text-green-700">
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>15-minute daily check-ins</span></li>
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>95% on-time payments</span></li>
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>Smart priority tagging surfaces critical tasks instantly</span></li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
+
         <section className="w-full py-16 md:py-24" id="services">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">Build, Launch & Grow with Our Services</h2>
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Build, Launch &amp; Grow with Our Services</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">We offer a complete suite of services to bring your digital products to life, from initial concept to launch and beyond.</p>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -302,7 +365,7 @@ export default function Home() {
         </section>
         <section className="w-full py-16 text-center">
           <div className="container mx-auto px-4 md:px-6 space-y-8">
-            <Image src={image4} alt="App Screenshot"  className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
+            <Image src={image4} alt="App Screenshot" className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
           </div>
         </section>
 
@@ -485,12 +548,14 @@ export default function Home() {
           </div>
         </section>
 
-
-        <section className="w-full py-16 md:py-24 text-center">
+        <section className="w-full py-12" id="trusted-by">
           <div className="container mx-auto px-4 md:px-6">
-              <div className="hidden lg:flex justify-center">
-                <Image src={image2} alt="Team discussing project" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
-              </div>
+            <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
+            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={40} className="object-contain" data-ai-hint="company logo" />
+              ))}
+            </div>
           </div>
         </section>
 
