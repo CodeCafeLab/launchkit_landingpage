@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -63,12 +64,10 @@ const services = [
 ];
 
 const whyChooseUs = [
-  { icon: <FastForward className="h-8 w-8 text-primary" />, title: "Agile Approach", description: "We use agile methodologies to deliver high-quality software quickly and efficiently." },
-  { icon: <UserCheck className="h-8 w-8 text-primary" />, title: "Tech Experts", description: "Our team of experienced engineers are experts in the latest technologies and best practices." },
-  { icon: <DollarSign className="h-8 w-8 text-primary" />, title: "Affordable Pricing", description: "We offer competitive pricing to help you build your dream product without breaking the bank." },
-  { icon: <Eye className="h-8 w-8 text-primary" />, title: "Transparent Communication", description: "We believe in open and honest communication, keeping you updated every step of the way." },
-  { icon: <Scaling className="h-8 w-8 text-primary" />, title: "Scalable Solutions", description: "We build solutions that can grow with your business, ensuring long-term success." },
-  { icon: <Server className="h-8 w-8 text-primary" />, title: "Dedicated Support", description: "Our team is here to support you, providing maintenance and assistance whenever you need it." },
+  { icon: <FastForward className="h-6 w-6 text-primary" />, title: "Agile Approach", description: "We use agile methodologies to deliver high-quality software quickly and efficiently." },
+  { icon: <UserCheck className="h-6 w-6 text-primary" />, title: "Tech Experts", description: "Our team of experienced engineers are experts in the latest technologies and best practices." },
+  { icon: <DollarSign className="h-6 w-6 text-primary" />, title: "Affordable Pricing", description: "We offer competitive pricing to help you build your dream product without breaking the bank." },
+  { icon: <Eye className="h-6 w-6 text-primary" />, title: "Transparent Communication", description: "We believe in open and honest communication, keeping you updated every step of the way." },
 ];
 
 const techStack = [
@@ -101,7 +100,6 @@ const faqs = [
   { q: "How long will it take to build my app?", a: "Timelines vary based on project complexity. A simple MVP might take 2-3 months, while a more feature-rich application could take 6 months or longer. We'll provide a detailed project timeline upfront." },
   { q: "Do you offer post-launch support?", a: "Yes, we offer ongoing support and maintenance packages to ensure your application runs smoothly and stays up-to-date with the latest security patches and technology updates." },
   { q: "Can you work with my existing team?", a: "Absolutely. We are happy to collaborate with your in-house team to augment your existing capabilities and ensure a smooth project delivery." },
-  { q: "What makes CodeCafe Labs different from other agencies?", a: "Our key differentiators are our deep technical expertise, our commitment to transparent communication, and our focus on building long-term partnerships. We don't just build software; we build solutions that drive business growth." }
 ];
 
 export default function Home() {
@@ -148,9 +146,9 @@ export default function Home() {
 
   const navLinks = [
     { name: 'Services', href: '#services' },
-    { name: 'Pricing', href: '#payment' },
     { name: 'Why Us', href: '#why-us' },
     { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Contact', href: '#contact' },
     { name: 'FAQ', href: '#faq' },
   ];
 
@@ -224,7 +222,7 @@ export default function Home() {
             <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60 grayscale">
               {[1, 2, 3, 4, 5, 6].map(i => (
-                <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={60} data-ai-hint="company logo" />
+                <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={40} className="object-contain" data-ai-hint="company logo" />
               ))}
             </div>
           </div>
@@ -243,13 +241,118 @@ export default function Home() {
                     {service.icon}
                   </div>
                   <CardTitle className="font-headline text-xl mb-2">{service.title}</CardTitle>
-                  <CardContent className="p-0 text-muted-foreground">{service.description}</CardContent>
+                  <CardDescription className="p-0 text-muted-foreground">{service.description}</CardDescription>
                 </Card>
               ))}
             </div>
           </div>
         </section>
+        
+        <section className="w-full py-16 md:py-24 bg-secondary/20" id="why-us">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <Image src={image4} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team working" />
+              </div>
+              <div className="space-y-8">
+                <div className="text-left space-y-4">
+                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose CodeCafe Labs?</h2>
+                    <p className="text-muted-foreground max-w-2xl">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
+                </div>
+                <div className="space-y-6">
+                  {whyChooseUs.map(item => (
+                    <div key={item.title} className="flex items-start gap-4">
+                      <div className="p-2 bg-primary/10 rounded-full flex-shrink-0">{item.icon}</div>
+                      <div>
+                        <h4 className="font-semibold text-lg">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
+        <section className="w-full py-16 md:py-24" id="industries">
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Industries We Serve</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">Our expertise spans across various industries, delivering tailored solutions that meet specific market needs.</p>
+            </div>
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
+              {industries.map(industry => (
+                <div key={industry} className="py-2 px-6 bg-secondary/30 border border-border/50 rounded-full text-lg font-medium text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary">
+                  {industry}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full py-16 md:py-24 bg-secondary/20" id="tech-stack">
+            <div className="container mx-auto px-4">
+                <div className="text-center space-y-4 mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
+                </div>
+                <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
+                    {techStack.map(tech => (
+                        <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
+                            <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
+                                <Image src={tech.icon} alt={`${tech.name} logo`} width={48} height={48} className="object-contain" data-ai-hint={tech.hint} />
+                            </div>
+                            <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section className="w-full py-16 md:py-24" id="testimonials">
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">What Our Clients Say</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">Real stories from businesses we've helped empower.</p>
+            </div>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1 h-full">
+                      <Card className="bg-secondary/30 border-border/50 h-full flex flex-col">
+                        <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
+                            <Star className="w-5 h-5 text-yellow-400 mb-4" />
+                            <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote}"</p>
+                          <div className="flex items-center gap-4">
+                            <Avatar>
+                              <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
+                              <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-semibold">{testimonial.name}</p>
+                              <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        </section>
+        
         <section className="w-full py-16 md:py-24 bg-secondary/20" id="payment">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -301,128 +404,12 @@ export default function Home() {
           </div>
         </section>
 
-
-        <section className="w-full py-16 md:py-24" id="why-us">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose CodeCafe Labs?</h2>
-                <p className="text-muted-foreground">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
-                <div className="grid gap-6 sm:grid-cols-2">
-                  {whyChooseUs.map(item => (
-                    <div key={item.title} className="flex items-start gap-4">
-                      <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">{item.icon}</div>
-                      <div>
-                        <h4 className="font-semibold text-lg">{item.title}</h4>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <Image src={image3} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <section>
-          <div className="container mx-auto px-4 flex justify-center items-center">
-            <Image src={image2} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
-          </div>
-        </section>
-
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="tech-stack">
-            <div className="container mx-auto px-4">
-                <div className="text-center space-y-4 mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
-                    <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
-                </div>
-                <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
-                    {techStack.map(tech => (
-                        <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
-                            <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
-                                <Image src={tech.icon} alt={`${tech.name} logo`} width={40} height={40} data-ai-hint={tech.hint} />
-                            </div>
-                            <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-
-        <section className="w-full py-16 md:py-24" id="industries">
-          <div className="container mx-auto px-4">
-            <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">We’ve Worked With</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">Our expertise spans across various industries, delivering tailored solutions that meet specific market needs.</p>
-            </div>
-            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
-              {industries.map(industry => (
-                <div key={industry} className="py-2 px-6 bg-secondary/30 border border-border/50 rounded-full text-lg font-medium text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary">
-                  {industry}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="testimonials">
-          <div className="container mx-auto px-4">
-            <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">What Our Clients Say</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">Real stories from businesses we've helped empower.</p>
-            </div>
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-1 h-full">
-                      <Card className="bg-secondary/30 border-border/50 h-full flex flex-col">
-                        <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
-                          <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote}"</p>
-                          <div className="flex items-center gap-4">
-                            <Avatar>
-                              <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
-                              <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <p className="font-semibold">{testimonial.name}</p>
-                              <p className="text-sm text-muted-foreground">{testimonial.company}</p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-          </div>
-        </section>
-
-        <section>
-          <div className="container mx-auto px-4 flex justify-center items-center">
-            <Image src={image1} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
-          </div>
-        </section>
-
         <section className="w-full py-16 md:py-24" id="contact">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary/20 p-8 md:p-12 rounded-lg border-border/50">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold font-headline">Have a different need?</h2>
-                <p className="text-muted-foreground">Let's discuss your custom project. Fill out the form, and our team will get back to you within 24 hours to schedule your free, no-obligation consultation.</p>
+                <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with CodeCafe Labs?</h2>
+                <p className="text-muted-foreground">Let's discuss your project over a free demo call. Fill out the form, and our team will get back to you within 24 hours.</p>
                 <div className="border-t border-border/50 pt-6 space-y-4">
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> Submit the form with your project idea.</div>
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> We'll email you to schedule a demo call.</div>
@@ -483,14 +470,30 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="w-full py-16 md:py-24 text-center">
+            <div className="container mx-auto px-4 space-y-8">
+                 <Image src={image1} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="team collaboration" />
+                 <Image src={image2} alt="App Screenshot" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
+                 <Image src={image3} alt="Code snippet" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
+            </div>
+        </section>
+
       </main>
 
       <footer className="w-full bg-secondary/20 border-t border-border/50">
         <div className="container mx-auto px-4 py-8">
-          <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
+          <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
+            <div className="md:col-span-1">
               <h4 className="font-semibold text-lg mb-4">About CodeCafe Labs</h4>
               <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences that drive business growth.</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
+                <ul className="space-y-2">
+                    {navLinks.map(link => (
+                        <li key={link.href}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
+                    ))}
+                </ul>
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Contact</h4>
@@ -590,3 +593,4 @@ export default function Home() {
   );
 }
 
+    
