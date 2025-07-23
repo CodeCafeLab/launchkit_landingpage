@@ -18,7 +18,7 @@ const ClassifyLeadInputSchema = z.object({
   projectDetails: z
     .string()
     .describe(
-      'Detailed description of the project, which may include phone number and website.'
+      'Detailed description of the project, which may include company name.'
     ),
 });
 export type ClassifyLeadInput = z.infer<typeof ClassifyLeadInputSchema>;
@@ -43,23 +43,22 @@ const classifyLeadPrompt = ai.definePrompt({
   name: 'classifyLeadPrompt',
   input: {schema: ClassifyLeadInputSchema},
   output: {schema: ClassifyLeadOutputSchema},
-  prompt: `You are an AI assistant for a digital marketing agency called CodecCafe, designed to classify leads from a contact form.
+  prompt: `You are an AI assistant for a B2B lead generation agency called CatalystFlow, designed to classify leads from a contact form.
 
-  Your goal is to determine if a lead is of High, Medium, or Low priority.
+  Your goal is to determine if a lead is of High, Medium, or Low priority for LinkedIn outreach services.
 
   High Priority:
-  - The user has a clear business and a live website.
-  - The user seems to have a budget or is asking about scaling/growth.
-  - The project sounds urgent or they are looking to switch providers.
+  - The user is from a B2B company (e.g., SaaS, Agency, Consulting).
+  - Their company seems established and a good fit for premium services.
+  - The lead provides a work email address.
 
   Medium Priority:
-  - The user has a business idea but maybe not a live website yet.
-  - Their request is a bit generic (e.g., "I need marketing").
-  - They provide a valid-looking phone number and email.
+  - The user is a startup founder or from a smaller company.
+  - Their request is a bit generic but they seem serious.
 
   Low Priority:
   - The request is very vague or seems like spam.
-  - The email or website looks suspicious.
+  - The email looks suspicious (e.g., generic gmail/hotmail for a company).
   - They are just kicking tires and asking for general information without project specifics.
 
   Analyze the following lead information and classify its priority. Provide a concise reason for your classification.
