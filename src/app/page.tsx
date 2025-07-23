@@ -198,21 +198,28 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
-        <section className="relative w-full py-20 md:py-32 lg:py-40 bg-hero-gradient" id="hero">
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400">
-              Empower Your Business with <span className="text-primary">CodeCafe Labs</span>
-            </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups & businesses.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => setPaymentModalOpen(true)}>
-                Book a Free Demo <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
-                Explore More
-              </Button>
+        <section className="relative w-full bg-hero-gradient" id="hero">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
+              <div className="text-center lg:text-left">
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400">
+                  Empower Your Business with <span className="text-primary">CodeCafe Labs</span>
+                </h1>
+                <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+                  Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups & businesses.
+                </p>
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <Button size="lg" onClick={() => setPaymentModalOpen(true)}>
+                    Book a Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
+                    Explore More
+                  </Button>
+                </div>
+              </div>
+              <div className="hidden lg:flex justify-center">
+                 <Image src={image1} alt="Team discussing project" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
+              </div>
             </div>
           </div>
         </section>
@@ -472,7 +479,6 @@ export default function Home() {
 
         <section className="w-full py-16 md:py-24 text-center">
             <div className="container mx-auto px-4 space-y-8">
-                 <Image src={image1} alt="Team discussing project" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="team collaboration" />
                  <Image src={image2} alt="App Screenshot" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
                  <Image src={image3} alt="Code snippet" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
             </div>
@@ -592,5 +598,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
