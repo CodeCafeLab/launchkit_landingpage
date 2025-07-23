@@ -240,21 +240,18 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground overflow-x-hidden">
       <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between px-4">
-          <div className="flex items-center gap-6">
-            <a href="#hero" className="flex items-center gap-2">
-              <Code className="h-7 w-7 text-primary" />
-              <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
-            </a>
-            <nav className="hidden md:flex items-center gap-4">
+          <a href="#hero" className="flex items-center gap-2">
+            <Code className="h-7 w-7 text-primary" />
+            <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
+          </a>
+          <div className="flex items-center gap-2">
+            <nav className="hidden md:flex items-center gap-6">
               {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
             </nav>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="hidden md:block">
+            <div className="hidden md:block ml-4">
               <Button onClick={handleCtaClick}>Book a Free Demo</Button>
             </div>
             <div className="md:hidden">
