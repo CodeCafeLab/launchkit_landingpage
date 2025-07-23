@@ -201,13 +201,8 @@ export default function Home() {
         <section className="relative w-full bg-hero-gradient" id="hero">
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
-              <section className="w-full py-16 md:py-24 text-center">
-                <div className="container mx-auto px-4 space-y-8">
-                  <Image src={image3} alt="Code snippet" width={800} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
-                </div>
-              </section>
               <div className="text-center lg:text-left">
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400">
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter">
                   Empower Your Business with <span className="text-primary">CodeCafe Labs</span>
                 </h1>
                 <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
@@ -222,6 +217,11 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
+              <section className="w-full py-16 md:py-24 text-center">
+                <div className="container mx-auto px-4 space-y-8">
+                  <Image src={image3} alt="Code snippet" width={800} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
+                </div>
+              </section>
             </div>
           </div>
         </section>
@@ -229,7 +229,7 @@ export default function Home() {
         <section className="w-full py-12" id="trusted-by">
           <div className="container mx-auto px-4">
             <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60 grayscale">
+            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60">
               {[1, 2, 3, 4, 5, 6].map(i => (
                 <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={40} className="object-contain" data-ai-hint="company logo" />
               ))}
@@ -245,7 +245,7 @@ export default function Home() {
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
-                <Card key={service.title} className="bg-secondary/30 border-border/50 p-6 flex flex-col items-start text-left hover:border-primary/50 hover:bg-secondary/50 transition-all duration-300 transform hover:-translate-y-2">
+                <Card key={service.title} className="bg-card border p-6 flex flex-col items-start text-left hover:border-primary/50 hover:bg-secondary/50 transition-all duration-300 transform hover:-translate-y-2">
                   <div className="p-3 bg-primary/10 rounded-lg mb-4">
                     {service.icon}
                   </div>
@@ -257,7 +257,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="why-us">
+        <section className="w-full py-16 md:py-24 bg-secondary" id="why-us">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -292,20 +292,20 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
               {industries.map(industry => (
-                <div key={industry} className="py-2 px-6 bg-secondary/30 border border-border/50 rounded-full text-lg font-medium text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary">
+                <div key={industry} className="py-2 px-6 bg-secondary border rounded-full text-lg font-medium text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary">
                   {industry}
                 </div>
               ))}
             </div>
           </div>
         </section>
-        <section className="w-full py-16  text-center">
+        <section className="w-full py-16 text-center">
           <div className="container mx-auto px-4 space-y-8">
             <Image src={image4} alt="App Screenshot"  className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
           </div>
         </section>
 
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="tech-stack">
+        <section className="w-full py-16 md:py-24 bg-secondary" id="tech-stack">
           <div className="container mx-auto px-4">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
@@ -314,7 +314,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
               {techStack.map(tech => (
                 <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
-                  <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
+                  <div className="grayscale-0 group-hover:grayscale-0 transition-all duration-300">
                     <Image src={tech.icon} alt={`${tech.name} logo`} width={48} height={48} className="object-contain" data-ai-hint={tech.hint} />
                   </div>
                   <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
@@ -341,7 +341,7 @@ export default function Home() {
                 {testimonials.map((testimonial, index) => (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1 h-full">
-                      <Card className="bg-secondary/30 border-border/50 h-full flex flex-col">
+                      <Card className="bg-card border h-full flex flex-col">
                         <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
                           <Star className="w-5 h-5 text-yellow-400 mb-4" />
                           <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote}"</p>
@@ -367,7 +367,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="payment">
+        <section className="w-full py-16 md:py-24 bg-secondary" id="payment">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
@@ -377,11 +377,11 @@ export default function Home() {
                 <p className="text-muted-foreground text-lg">
                   No subscriptions, No hassle. Love it or get your money back within 7 days.
                 </p>
-                <div className="p-4 bg-secondary/50 border border-border/50 rounded-lg">
+                <div className="p-4 bg-background border rounded-lg">
                   <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@codecafelabs.com" className="text-primary hover:underline">support@codecafelabs.com</a> for help</p>
                 </div>
               </div>
-              <Card className="bg-secondary/30 border-border/50 shadow-2xl shadow-primary/10">
+              <Card className="bg-card border shadow-2xl shadow-primary/10">
                 <CardHeader className="pb-4">
                   <CardTitle className="font-headline text-2xl">Join 1,000+ Businesses Who Transformed Their Workflow</CardTitle>
                 </CardHeader>
@@ -420,11 +420,11 @@ export default function Home() {
 
         <section className="w-full py-16 md:py-24" id="contact">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary/20 p-8 md:p-12 rounded-lg border-border/50">
+            <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary p-8 md:p-12 rounded-lg border">
               <div className="space-y-6">
                 <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with CodeCafe Labs?</h2>
                 <p className="text-muted-foreground">Let's discuss your project over a free demo call. Fill out the form, and our team will get back to you within 24 hours.</p>
-                <div className="border-t border-border/50 pt-6 space-y-4">
+                <div className="border-t border-border pt-6 space-y-4">
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> Submit the form with your project idea.</div>
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> We'll email you to schedule a demo call.</div>
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> Discuss your project and get a proposal.</div>
@@ -472,7 +472,7 @@ export default function Home() {
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
                 {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`item-${i}`} className="border-b border-border/50">
+                  <AccordionItem key={i} value={`item-${i}`} className="border-b">
                     <AccordionTrigger className="text-lg text-left hover:no-underline">{faq.q}</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground text-base">
                       {faq.a}
@@ -493,7 +493,7 @@ export default function Home() {
 
       </main>
 
-      <footer className="w-full bg-secondary/20 border-t border-border/50">
+      <footer className="w-full bg-secondary border-t">
         <div className="container mx-auto px-4 py-8">
           <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
             <div className="md:col-span-1">
@@ -523,7 +523,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="border-t border-border/50 mt-8 pt-6 text-center">
+          <div className="border-t border-border mt-8 pt-6 text-center">
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} CodeCafe Labs. All rights reserved.
             </p>
