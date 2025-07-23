@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import React, { useState } from "react";
@@ -8,7 +9,7 @@ import { z } from "zod";
 import Image from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check
+  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
@@ -151,36 +152,6 @@ const testimonials = [
   { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at CodeCafe was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
 ];
 
-const pricingPlans = [
-    {
-        name: "Basic",
-        price: "$499",
-        period: "/month",
-        description: "Ideal for startups and small projects.",
-        features: ["1 Developer", "Weekly Updates", "Basic Support", "1 Project"],
-        cta: "Get Started",
-        popular: false
-    },
-    {
-        name: "Pro",
-        price: "$999",
-        period: "/month",
-        description: "Perfect for growing businesses and larger projects.",
-        features: ["2-3 Developers", "Daily Updates", "Priority Support", "Unlimited Projects", "Code Reviews"],
-        cta: "Choose Pro",
-        popular: true
-    },
-    {
-        name: "Enterprise",
-        price: "Contact Us",
-        period: "",
-        description: "Tailored for large organizations with custom needs.",
-        features: ["Dedicated Team", "24/7 Support", "Custom Features", "On-site Workshops", "Dedicated PM"],
-        cta: "Contact Sales",
-        popular: false
-    }
-];
-
 const faqs = [
     { q: "What is your development process?", a: "We follow an agile development process that allows us to deliver high-quality software in short iterations. This includes discovery, design, development, testing, and deployment, with continuous feedback loops." },
     { q: "How much will my project cost?", a: "The cost of a project depends on its scope and complexity. We provide a detailed estimate after an initial discovery call where we understand your requirements. Our goal is to offer affordable and transparent pricing." },
@@ -197,7 +168,6 @@ export default function Home() {
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<typeof pricingPlans[0] | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -229,18 +199,13 @@ export default function Home() {
     }
   }
 
-  const handlePlanSelection = (plan: typeof pricingPlans[0]) => {
-      if (plan.price.toLowerCase() === 'contact us') {
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        setSelectedPlan(plan);
-        setPaymentModalOpen(true);
-      }
+  const handleCtaClick = () => {
+      document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   const navLinks = [
       { name: 'Services', href: '#services' },
-      { name: 'Pricing', href: '#pricing'},
+      { name: 'Pricing', href: '#payment'},
       { name: 'Why Us', href: '#why-us' },
       { name: 'Testimonials', href: '#testimonials' },
       { name: 'FAQ', href: '#faq' },
@@ -259,7 +224,7 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-2">
               <div className="hidden md:block">
-                  <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Book a Free Demo</Button>
+                  <Button onClick={handleCtaClick}>Book a Free Demo</Button>
               </div>
               <div className="md:hidden">
                   <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -282,7 +247,7 @@ export default function Home() {
                                       </a>
                                   ))}
                               </nav>
-                              <Button onClick={() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
+                              <Button onClick={() => { handleCtaClick(); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
                           </div>
                       </SheetContent>
                   </Sheet>
@@ -301,7 +266,7 @@ export default function Home() {
               We build future-ready digital solutions that drive growth, innovation, and success for your business.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+              <Button size="lg" onClick={handleCtaClick}>
                 Book a Free Demo <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -341,43 +306,58 @@ export default function Home() {
                  </div>
             </div>
         </section>
-
-         <section className="w-full py-16 md:py-24 bg-secondary/20" id="pricing">
+        
+        <section className="w-full py-16 md:py-24 bg-secondary/20" id="payment">
             <div className="container mx-auto px-4">
-                <div className="text-center space-y-4 mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Transparent Pricing for Every Need</h2>
-                    <p className="text-muted-foreground max-w-2xl mx-auto">Choose a plan that scales with your business. No hidden fees, just clear, value-driven pricing.</p>
-                </div>
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                    {pricingPlans.map((plan) => (
-                        <Card key={plan.name} className={`bg-secondary/30 border-border/50 flex flex-col ${plan.popular ? 'border-primary/80 shadow-lg shadow-primary/10' : ''}`}>
-                            {plan.popular && <div className="text-center py-1.5 px-4 bg-primary text-primary-foreground text-sm font-semibold rounded-t-lg">Most Popular</div>}
-                            <CardHeader className="text-center">
-                                <CardTitle className="font-headline text-2xl mb-2">{plan.name}</CardTitle>
-                                <CardDescription>{plan.description}</CardDescription>
-                            </CardHeader>
-                            <CardContent className="flex flex-col flex-grow">
-                                <div className="text-center my-4">
-                                    <span className="text-4xl font-bold">{plan.price}</span>
-                                    <span className="text-muted-foreground">{plan.period}</span>
-                                </div>
-                                <ul className="space-y-3 text-muted-foreground flex-grow">
-                                    {plan.features.map(feature => (
-                                        <li key={feature} className="flex items-center gap-3">
-                                            <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                                            <span>{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <Button onClick={() => handlePlanSelection(plan)} className="w-full mt-8" size="lg" variant={plan.popular ? 'default' : 'outline'}>
-                                    {plan.cta}
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    ))}
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-6">
+                        <h2 className="text-4xl md:text-5xl font-bold font-headline leading-tight">
+                            Your <span className="text-primary underline decoration-wavy decoration-from-font">one-time payment</span> grants lifetime access
+                        </h2>
+                        <p className="text-muted-foreground text-lg">
+                            No subscriptions, No hassle. Love it or get your money back within 7 days.
+                        </p>
+                        <div className="p-4 bg-secondary/50 border border-border/50 rounded-lg">
+                            <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@codecafelabs.com" className="text-primary hover:underline">support@codecafelabs.com</a> for help</p>
+                        </div>
+                    </div>
+                    <Card className="bg-secondary/30 border-border/50 shadow-2xl shadow-primary/10">
+                        <CardHeader className="pb-4">
+                            <CardTitle className="font-headline text-2xl">Join 1,000+ Businesses Who Transformed Their Workflow</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="my-4">
+                                <span className="text-5xl font-bold mr-2">₹549</span>
+                                <span className="text-2xl text-muted-foreground line-through">₹999</span>
+                            </div>
+                            <p className="text-primary font-semibold mb-6">40% OFFER WITH EVERYTHING INCLUDED</p>
+
+                            <Button onClick={() => setPaymentModalOpen(true)} className="w-full text-lg" size="lg">
+                                <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
+                            </Button>
+
+                            <p className="text-center text-muted-foreground mt-4 text-sm font-semibold">7-Days Money Back Guarantee (No Questions Asked)</p>
+
+                            <ul className="space-y-3 text-muted-foreground mt-6">
+                                <li className="flex items-center gap-3">
+                                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                                    <span>Lifetime access + updates</span>
+                                </li>
+                                <li className="flex items-center gap-3">
+                                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                                    <span>In-depth tutorials and examples</span>
+                                </li>
+                                <li className="flex items-center gap-3">
+                                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                                    <span>7-day money-back guarantee</span>
+                                </li>
+                            </ul>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </section>
+
 
         <section className="w-full py-16 md:py-24" id="why-us">
             <div className="container mx-auto px-4">
@@ -486,8 +466,8 @@ export default function Home() {
             <div className="container mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary/20 p-8 md:p-12 rounded-lg border-border/50">
                     <div className="space-y-6">
-                         <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with CodeCafe Labs?</h2>
-                         <p className="text-muted-foreground">Let's discuss your project over a free demo call. Fill out the form, and our team will get back to you within 24 hours to schedule your free, no-obligation consultation.</p>
+                         <h2 className="text-3xl md:text-4xl font-bold font-headline">Have a different need?</h2>
+                         <p className="text-muted-foreground">Let's discuss your custom project. Fill out the form, and our team will get back to you within 24 hours to schedule your free, no-obligation consultation.</p>
                          <div className="border-t border-border/50 pt-6 space-y-4">
                              <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> Submit the form with your project idea.</div>
                              <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> We'll email you to schedule a demo call.</div>
@@ -496,7 +476,7 @@ export default function Home() {
                     </div>
                     <Card className="text-foreground bg-background shadow-2xl">
                         <CardHeader>
-                            <CardTitle>Book a Free Demo</CardTitle>
+                            <CardTitle>Book a Free Consultation</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <Form {...form}>
@@ -602,12 +582,12 @@ export default function Home() {
         </AlertDialogContent>
       </AlertDialog>
 
-      <Dialog open={isPaymentModalOpen} onOpenChange={setPaymentModalOpen}>
+       <Dialog open={isPaymentModalOpen} onOpenChange={setPaymentModalOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Complete Your Purchase</DialogTitle>
             <DialogDescription>
-              You're choosing the <strong>{selectedPlan?.name}</strong> plan for <strong>{selectedPlan?.price}</strong>{selectedPlan?.period}.
+              You're choosing the Lifetime Access plan for <strong>₹549</strong>.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -639,9 +619,9 @@ export default function Home() {
           <DialogFooter>
             <Button type="submit" className="w-full" onClick={() => {
                 setPaymentModalOpen(false);
-                toast({ title: "Payment Successful!", description: `Thank you for purchasing the ${selectedPlan?.name} plan.` });
+                toast({ title: "Payment Successful!", description: `Thank you for purchasing the Lifetime Access plan.` });
             }}>
-              Pay {selectedPlan?.price}
+              Pay ₹549
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -650,3 +630,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
