@@ -14,7 +14,6 @@ import before from './ezgif.com-video-to-gif-converter.gif'
 import after from './ScreenRecording2025-03-30at7.19.04PM-ezgif.com-video-to-gif-converter.gif'
 import { HomeUI } from "@/components/ui/home-ui";
 
-
 export default function Home() {
 
   return (
