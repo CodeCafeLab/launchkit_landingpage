@@ -215,44 +215,47 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between px-4">
-          <a href="#hero" className="flex items-center gap-2">
-            <Code className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
-          </a>
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
-          </nav>
-          <div className="flex items-center gap-2">
-              <div className="hidden md:block">
-                  <Button onClick={handleCtaClick}>Book a Free Demo</Button>
-              </div>
-              <div className="md:hidden">
-                  <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                      <SheetTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                              <Menu className="h-6 w-6" />
-                              <span className="sr-only">Open menu</span>
-                          </Button>
-                      </SheetTrigger>
-                      <SheetContent side="right" className="w-[280px] bg-background">
-                          <div className="flex flex-col h-full p-4">
-                              <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
-                                  <Code className="h-8 w-8 text-primary" />
-                                  <span className="text-2xl font-bold font-headline">CodeCafe Labs</span>
-                              </a>
-                              <nav className="flex flex-col gap-6 text-lg">
-                                  {navLinks.map(link => (
-                                      <a key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary transition-colors">
-                                          {link.name}
-                                      </a>
-                                  ))}
-                              </nav>
-                              <Button onClick={() => { handleCtaClick(); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
-                          </div>
-                      </SheetContent>
-                  </Sheet>
-              </div>
-          </div>
+            <div className="flex items-center gap-6">
+                <a href="#hero" className="flex items-center gap-2">
+                    <Code className="h-7 w-7 text-primary" />
+                    <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
+                </a>
+                <nav className="hidden md:flex items-center gap-4">
+                    {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
+                </nav>
+            </div>
+          
+            <div className="flex items-center gap-2">
+                <div className="hidden md:block">
+                    <Button onClick={handleCtaClick}>Book a Free Demo</Button>
+                </div>
+                <div className="md:hidden">
+                    <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                        <SheetTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                                <Menu className="h-6 w-6" />
+                                <span className="sr-only">Open menu</span>
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="right" className="w-[280px] bg-background">
+                            <div className="flex flex-col h-full p-4">
+                                <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
+                                    <Code className="h-8 w-8 text-primary" />
+                                    <span className="text-2xl font-bold font-headline">CodeCafe Labs</span>
+                                </a>
+                                <nav className="flex flex-col gap-6 text-lg">
+                                    {navLinks.map(link => (
+                                        <a key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary transition-colors">
+                                            {link.name}
+                                        </a>
+                                    ))}
+                                </nav>
+                                <Button onClick={() => { handleCtaClick(); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
+                            </div>
+                        </SheetContent>
+                    </Sheet>
+                </div>
+            </div>
         </div>
       </header>
       
