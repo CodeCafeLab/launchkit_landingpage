@@ -43,7 +43,7 @@ const classifyLeadPrompt = ai.definePrompt({
   name: 'classifyLeadPrompt',
   input: {schema: ClassifyLeadInputSchema},
   output: {schema: ClassifyLeadOutputSchema},
-  prompt: `You are an AI assistant for a B2B lead generation agency called CatalystFlow, designed to classify leads from a contact form.
+  prompt: `You are an AI assistant for a B2B lead generation agency from CodeCafe Labs, designed to classify leads from a contact form for a service called ClientBrew.
 
   Your goal is to determine if a lead is of High, Medium, or Low priority for LinkedIn outreach services.
 

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, Zap, Rocket, Star, Linkedin, Users, TrendingUp, Target, Calendar, CheckCircle } from "lucide-react";
+import { Loader2, Zap, Rocket, Star, Linkedin, Users, TrendingUp, Target, Calendar, CheckCircle, Coffee } from "lucide-react";
 import Image from "next/image";
 
 import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
@@ -61,16 +61,16 @@ const howItWorks = [
 
 const testimonials = [
   {
-    quote: "We saw a 300% increase in qualified leads within the first two months. CatalystFlow is a game-changer.",
-    name: "Sarah Johnson",
-    company: "CEO, Innovatech",
+    quote: "We saw a 300% increase in qualified leads within the first two months. ClientBrew is a game-changer.",
+    name: "Alex Reed",
+    company: "CEO, DevOptimize",
     avatar: "https://placehold.co/100x100.png",
     hint: "woman portrait"
   },
   {
     quote: "Their system is incredibly efficient. We're now booking 8-10 high-value client meetings every single month.",
-    name: "Michael Chen",
-    company: "Founder, Quantum Solutions",
+    name: "Jasmine Patel",
+    company: "Founder, CloudSphere Inc.",
     avatar: "https://placehold.co/100x100.png",
     hint: "man portrait"
   },
@@ -99,7 +99,7 @@ export default function Home() {
       const result = await classifyLead({
         name: values.name,
         email: values.email,
-        projectDetails: `Lead from CatalystFlow landing page. Company: ${values.company}. Interested in LinkedIn lead generation.`,
+        projectDetails: `Lead from ClientBrew landing page. Company: ${values.company}. Interested in LinkedIn lead generation.`,
       });
       setClassificationResult(result);
       setIsResultOpen(true);
@@ -132,8 +132,8 @@ export default function Home() {
       <header className="w-full bg-background border-b py-4 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold font-headline">CatalystFlow</span>
+            <Coffee className="h-8 w-8 text-primary" />
+            <span className="text-2xl font-bold font-headline">ClientBrew</span>
           </div>
           <Button>Book a Call</Button>
         </div>
@@ -146,7 +146,7 @@ export default function Home() {
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
               <div className="space-y-6">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tighter">
-                  We Help B2B Companies Get High-Value Clients from <span className="text-primary">LinkedIn</span>
+                  We Help B2B Tech Companies Get High-Value Clients from <span className="text-primary">LinkedIn</span>
                 </h1>
                 <p className="text-lg text-muted-foreground">
                   We build a predictable client acquisition engine that gets you 5-10 high-value clients every month—without spending a dime on ads.
@@ -191,7 +191,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-20 lg:py-24 bg-card" id="features">
             <div className="container mx-auto px-4">
                 <div className="text-center space-y-4 mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold font-headline">What You Get With CatalystFlow</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold font-headline">What You Get With ClientBrew</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">Everything you need to build a powerful lead generation machine.</p>
                 </div>
                 <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-2">
@@ -293,7 +293,7 @@ export default function Home() {
                             <FormItem>
                               <FormLabel>Company Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. Innovatech" {...field} />
+                                <Input placeholder="e.g. DevOptimize" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -315,7 +315,7 @@ export default function Home() {
       <footer className="w-full bg-background border-t">
         <div className="container mx-auto px-4 py-8 text-center">
              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} CatalystFlow. All rights reserved.
+                © {new Date().getFullYear()} CodeCafe Labs. All rights reserved.
             </p>
         </div>
       </footer>
