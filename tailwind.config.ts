@@ -18,6 +18,7 @@ export default {
     extend: {
       backgroundImage: {
         'grid-white/[0.05]': 'linear-gradient(90deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 0), linear-gradient(180deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 0)',
+        'hero-gradient': 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--primary) / 0.3), transparent)',
       },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
