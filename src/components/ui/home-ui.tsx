@@ -457,29 +457,12 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
           </div>
         </section>
 
-        <section className="w-full py-16 md:py-24" id="faq">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">Frequently Asked Questions</h2>
-            </div>
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`item-${i}`} className="border-b">
-                    <AccordionTrigger className="text-lg text-left hover:no-underline">{faq.q}</AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground text-base">
-                      {faq.a}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
-        </section>
 
-        <section className="w-full py-16 text-center">
+        <section className="w-full py-16 text-centerbg-secondary">
+          <div className="flex justify-center items-center rounded-lg  p-4">
+            <Image src={image2} alt="Why Choose Us" width={500} height={500} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
+          </div>
           <div className="container mx-auto px-4 md:px-6 space-y-8">
-            <Image src={image2} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
                 <h3 className="text-3xl font-bold text-red-500 mb-4 text-center">BEFORE</h3>
@@ -515,6 +498,27 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
               {[1, 2, 3, 4, 5, 6].map(i => (
                 <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={40} className="object-contain" data-ai-hint="company logo" />
               ))}
+            </div>
+          </div>
+        </section>
+
+
+        <section className="w-full py-16 md:py-24" id="faq">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Frequently Asked Questions</h2>
+            </div>
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="w-full">
+                {faqs.map((faq, i) => (
+                  <AccordionItem key={i} value={`item-${i}`} className="border-b">
+                    <AccordionTrigger className="text-lg text-left hover:no-underline">{faq.q}</AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground text-base">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           </div>
         </section>
