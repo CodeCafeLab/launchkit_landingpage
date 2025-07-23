@@ -8,17 +8,19 @@ import { z } from "zod";
 import Image from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart
+  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from "@/components/ui/alert-dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -88,6 +90,36 @@ const testimonials = [
   { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at CodeCafe was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
 ];
 
+const pricingPlans = [
+    {
+        name: "Basic",
+        price: "$499",
+        period: "/month",
+        description: "Ideal for startups and small projects.",
+        features: ["1 Developer", "Weekly Updates", "Basic Support", "1 Project"],
+        cta: "Get Started",
+        popular: false
+    },
+    {
+        name: "Pro",
+        price: "$999",
+        period: "/month",
+        description: "Perfect for growing businesses and larger projects.",
+        features: ["2-3 Developers", "Daily Updates", "Priority Support", "Unlimited Projects", "Code Reviews"],
+        cta: "Choose Pro",
+        popular: true
+    },
+    {
+        name: "Enterprise",
+        price: "Contact Us",
+        period: "",
+        description: "Tailored for large organizations with custom needs.",
+        features: ["Dedicated Team", "24/7 Support", "Custom Features", "On-site Workshops", "Dedicated PM"],
+        cta: "Contact Sales",
+        popular: false
+    }
+];
+
 const faqs = [
     { q: "What is your development process?", a: "We follow an agile development process that allows us to deliver high-quality software in short iterations. This includes discovery, design, development, testing, and deployment, with continuous feedback loops." },
     { q: "How much will my project cost?", a: "The cost of a project depends on its scope and complexity. We provide a detailed estimate after an initial discovery call where we understand your requirements. Our goal is to offer affordable and transparent pricing." },
@@ -103,6 +135,8 @@ export default function Home() {
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<typeof pricingPlans[0] | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -133,9 +167,19 @@ export default function Home() {
       setIsSubmitting(false);
     }
   }
-  
+
+  const handlePlanSelection = (plan: typeof pricingPlans[0]) => {
+      if (plan.price.toLowerCase() === 'contact us') {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        setSelectedPlan(plan);
+        setPaymentModalOpen(true);
+      }
+  }
+
   const navLinks = [
       { name: 'Services', href: '#services' },
+      { name: 'Pricing', href: '#pricing'},
       { name: 'Why Us', href: '#why-us' },
       { name: 'Testimonials', href: '#testimonials' },
       { name: 'FAQ', href: '#faq' },
@@ -237,7 +281,44 @@ export default function Home() {
             </div>
         </section>
 
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="why-us">
+         <section className="w-full py-16 md:py-24 bg-secondary/20" id="pricing">
+            <div className="container mx-auto px-4">
+                <div className="text-center space-y-4 mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Transparent Pricing for Every Need</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">Choose a plan that scales with your business. No hidden fees, just clear, value-driven pricing.</p>
+                </div>
+                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+                    {pricingPlans.map((plan) => (
+                        <Card key={plan.name} className={`bg-secondary/30 border-border/50 flex flex-col ${plan.popular ? 'border-primary/80 shadow-lg shadow-primary/10' : ''}`}>
+                            {plan.popular && <div className="text-center py-1.5 px-4 bg-primary text-primary-foreground text-sm font-semibold rounded-t-lg">Most Popular</div>}
+                            <CardHeader className="text-center">
+                                <CardTitle className="font-headline text-2xl mb-2">{plan.name}</CardTitle>
+                                <CardDescription>{plan.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="text-center my-4">
+                                    <span className="text-4xl font-bold">{plan.price}</span>
+                                    <span className="text-muted-foreground">{plan.period}</span>
+                                </div>
+                                <ul className="space-y-3 text-muted-foreground flex-grow">
+                                    {plan.features.map(feature => (
+                                        <li key={feature} className="flex items-center gap-3">
+                                            <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <Button onClick={() => handlePlanSelection(plan)} className="w-full mt-8" size="lg" variant={plan.popular ? 'default' : 'outline'}>
+                                    {plan.cta}
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section className="w-full py-16 md:py-24" id="why-us">
             <div className="container mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <div className="space-y-6">
@@ -262,7 +343,7 @@ export default function Home() {
             </div>
         </section>
         
-        <section className="w-full py-16 md:py-24" id="tech-stack">
+        <section className="w-full py-16 md:py-24 bg-secondary/20" id="tech-stack">
           <div className="container mx-auto px-4">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
@@ -279,7 +360,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full py-16 md:py-24 bg-secondary/20" id="industries">
+        <section className="w-full py-16 md:py-24" id="industries">
             <div className="container mx-auto px-4">
                 <div className="text-center space-y-4 mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold font-headline">We've Worked With</h2>
@@ -296,7 +377,7 @@ export default function Home() {
         </section>
 
 
-        <section className="w-full py-16 md:py-24" id="testimonials">
+        <section className="w-full py-16 md:py-24 bg-secondary/20" id="testimonials">
           <div className="container mx-auto px-4">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">What Our Clients Say</h2>
@@ -332,8 +413,8 @@ export default function Home() {
                     </CarouselItem>
                 ))}
                 </CarouselContent>
-                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2" />
-                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2" />
+                <CarouselPrevious />
+                <CarouselNext />
             </Carousel>
           </div>
         </section>
@@ -457,8 +538,52 @@ export default function Home() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={isPaymentModalOpen} onOpenChange={setPaymentModalOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Complete Your Purchase</DialogTitle>
+            <DialogDescription>
+              You're choosing the <strong>{selectedPlan?.name}</strong> plan for <strong>{selectedPlan?.price}</strong>{selectedPlan?.period}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="card-number">Card Number</Label>
+              <div className="relative">
+                <Input id="card-number" placeholder="0000 0000 0000 0000" />
+                <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="expiry-date">Expiry Date</Label>
+                    <Input id="expiry-date" placeholder="MM/YY" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="cvc">CVC</Label>
+                    <div className="relative">
+                        <Input id="cvc" placeholder="123" />
+                        <Lock className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    </div>
+                </div>
+            </div>
+             <div className="space-y-2">
+              <Label htmlFor="name-on-card">Name on Card</Label>
+              <Input id="name-on-card" placeholder="John Doe" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit" className="w-full" onClick={() => {
+                setPaymentModalOpen(false);
+                toast({ title: "Payment Successful!", description: `Thank you for purchasing the ${selectedPlan?.name} plan.` });
+            }}>
+              Pay {selectedPlan?.price}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
-
-    
