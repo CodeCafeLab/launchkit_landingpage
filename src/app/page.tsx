@@ -37,6 +37,9 @@ import image3 from './CF-FF_ADS_CAROUSEL.webp'
 import image4 from './FF-FULLVIEW1-e1746439033331-1536x1395.webp'
 import client from './client2.jpeg'
 
+import before from './ezgif.com-video-to-gif-converter.gif'
+import after from './ScreenRecording2025-03-30at7.19.04PM-ezgif.com-video-to-gif-converter.gif'
+
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -233,73 +236,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <section className="w-full py-16 md:py-24 text-center">
-          <div className="container mx-auto px-4 md:px-6 space-y-8">
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-red-500">Chasing payments &amp; missed deadlines...</h3>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-green-500">Everything managed in One Dashboard!</h3>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Before Card */}
-              <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
-                <h3 className="text-3xl font-bold text-red-500 mb-4 text-center">BEFORE</h3>
-                <div className="bg-white rounded-lg shadow-inner p-4">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="p-2 font-semibold">Item</th>
-                          <th className="p-2 font-semibold">Deadline</th>
-                          <th className="p-2 font-semibold">Task</th>
-                          <th className="p-2 font-semibold">Status</th>
-                          <th className="p-2 font-semibold">Notes</th>
-                          <th className="p-2 font-semibold">Priority</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {beforeData.map((row, i) => (
-                          <tr key={i} className="border-b last:border-0">
-                            <td className="p-2">{row.item}</td>
-                            <td className="p-2">{row.deadline}</td>
-                            <td className="p-2">{row.task}</td>
-                            <td className="p-2">{row.status}</td>
-                            <td className="p-2">{row.notes}</td>
-                            <td className="p-2 font-bold text-red-600">{row.priority}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <ul className="mt-6 space-y-3 font-semibold text-lg text-red-700">
-                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>2 hours/day on messy Excel sheets</span></li>
-                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Late payments &amp; client fights</span></li>
-                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Overwhelmed by 50+ tasks daily</span></li>
-                </ul>
-              </div>
-
-              {/* After Card */}
-              <div className="bg-green-100 border-2 border-green-500 rounded-2xl p-6 text-left">
-                <h3 className="text-3xl font-bold text-green-500 mb-4 text-center">AFTER</h3>
-                <div className="bg-white rounded-lg shadow-inner p-4">
-                  <Image src={image4} alt="Freelancer Flow Dashboard" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
-                </div>
-                <ul className="mt-6 space-y-3 font-semibold text-lg text-green-700">
-                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>15-minute daily check-ins</span></li>
-                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>95% on-time payments</span></li>
-                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>Smart priority tagging surfaces critical tasks instantly</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
 
         <section className="w-full py-16 md:py-24" id="services">
           <div className="container mx-auto px-4 md:px-6">
@@ -548,6 +484,49 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="w-full py-16 md:py-24 text-center">
+          <div className="container mx-auto px-4 md:px-6 space-y-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
+              <div className="space-y-2 text-left">
+                <h3 className="text-2xl font-bold text-red-500">Chasing payments &amp; missed deadlines...</h3>
+              </div>
+              <div className="space-y-2 text-left">
+                <h3 className="text-2xl font-bold text-green-500">Everything managed in One Dashboard!</h3>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Before Card */}
+              <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
+                <h3 className="text-3xl font-bold text-red-500 mb-4 text-center">BEFORE</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                    <Image src={before} alt="Freelancer Flow Dashboard" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+                </div>
+                <ul className="mt-6 space-y-3 font-semibold text-lg text-red-700">
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>2 hours/day on messy Excel sheets</span></li>
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Late payments &amp; client fights</span></li>
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Overwhelmed by 50+ tasks daily</span></li>
+                </ul>
+              </div>
+
+              {/* After Card */}
+              <div className="bg-green-100 border-2 border-green-500 rounded-2xl p-6 text-left">
+                <h3 className="text-3xl font-bold text-green-500 mb-4 text-center">AFTER</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                  <Image src={after} alt="Freelancer Flow Dashboard" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+                </div>
+                <ul className="mt-6 space-y-3 font-semibold text-lg text-green-700">
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>15-minute daily check-ins</span></li>
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>95% on-time payments</span></li>
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>Smart priority tagging surfaces critical tasks instantly</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
         <section className="w-full py-12" id="trusted-by">
           <div className="container mx-auto px-4 md:px-6">
             <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
@@ -673,3 +652,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
