@@ -8,7 +8,7 @@ import { z } from "zod";
 import Image from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  ChevronDown, Linkedin, Twitter, Github
+  ChevronDown, Linkedin, Twitter, Github, CreditCard, Banknote, Landmark, Check
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
@@ -18,10 +18,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from "@/components/ui/alert-dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -44,6 +48,7 @@ const services = [
   { icon: <Smartphone className="h-10 w-10 text-primary" />, title: "Mobile App Development", description: "Native and cross-platform mobile applications that deliver a seamless experience on iOS and Android." },
   { icon: <PenTool className="h-10 w-10 text-primary" />, title: "UI/UX Design", description: "Intuitive and beautiful user interfaces designed to engage and delight your customers." },
   { icon: <Cloud className="h-10 w-10 text-primary" />, title: "Cloud and DevOps", description: "Automated infrastructure and deployment pipelines for reliable and efficient software delivery." },
+  { icon: <Zap className="h-10 w-10 text-primary" />, title: "AI Integration", description: "Leverage the power of AI to build intelligent features and automate your business processes." },
 ];
 
 const whyChooseUs = [
@@ -53,12 +58,37 @@ const whyChooseUs = [
     { icon: <Eye className="h-8 w-8 text-primary" />, title: "Transparent Process", description: "We believe in clear communication, providing you with regular updates and complete visibility." },
 ];
 
-const techStack = [ "react", "nodejs", "mongodb", "mysql", "nextjs", "tailwindcss", "docker", "kubernetes" ];
+const techStack = [ "react", "nodejs", "mongodb", "mysql", "nextjs", "tailwindcss", "docker", "kubernetes", "typescript", "figma", "go", "python" ];
 
 const testimonials = [
   { quote: "CodeCafe Labs delivered our platform ahead of schedule and beyond our expectations. Their team is professional, skilled, and a pleasure to work with.", name: "Sarah Johnson", company: "CEO, Innovate Inc.", avatar: "https://placehold.co/100x100.png", hint: "woman portrait" },
   { quote: "The mobile app they developed has received fantastic feedback from our users. The UI/UX is clean, and the performance is flawless.", name: "Michael Chen", company: "Founder, AppSphere", avatar: "https://placehold.co/100x100.png", hint: "man portrait" },
   { quote: "Their DevOps expertise streamlined our entire workflow, saving us countless hours and significantly reducing our server costs.", name: "Emily Rodriguez", company: "CTO, DataFlow", avatar: "https://placehold.co/100x100.png", hint: "woman face" },
+];
+
+const pricingPlans = [
+    {
+        name: "Developer",
+        price: "$4,999",
+        description: "For startups and small businesses ready to build their MVP.",
+        features: ["1 Dedicated Developer", "Weekly Sprints", "Full-time availability", "Project Management", "UI/UX Design"],
+        cta: "Get Started"
+    },
+    {
+        name: "Team",
+        price: "$8,999",
+        description: "For growing businesses that need to scale their development.",
+        features: ["2-3 Dedicated Developers", "Bi-weekly Sprints", "Full-time availability", "Dedicated Project Manager", "Advanced UI/UX & Prototyping"],
+        cta: "Get Started",
+        popular: true,
+    },
+    {
+        name: "Enterprise",
+        price: "Custom",
+        description: "For large organizations with complex requirements.",
+        features: ["Custom Team Size", "Flexible Sprint Schedule", "24/7 Priority Support", "Dedicated Tech Lead & PM", "Full Product Lifecycle Management"],
+        cta: "Contact Us"
+    }
 ];
 
 const faqs = [
@@ -74,6 +104,7 @@ export default function Home() {
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<(typeof pricingPlans[0] & {openDialog: boolean}) | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -107,6 +138,7 @@ export default function Home() {
   
   const navLinks = [
       { name: 'Services', href: '#services' },
+      { name: 'Pricing', href: '#pricing' },
       { name: 'Process', href: '#process' },
       { name: 'Tech Stack', href: '#tech-stack' },
       { name: 'Testimonials', href: '#testimonials' },
@@ -192,7 +224,7 @@ export default function Home() {
                  </div>
                  <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                      {services.map((service) => (
-                         <Card key={service.title} className="bg-muted/30 border-border/50 p-6 flex flex-col items-start text-left hover:border-primary/50 hover:bg-muted/50 transition-all">
+                         <Card key={service.title} className="bg-muted/30 border-border/50 p-6 flex flex-col items-start text-left hover:border-primary/50 hover:bg-muted/50 transition-all duration-300 transform hover:-translate-y-2">
                              <div className="p-3 bg-primary/10 rounded-lg mb-4">
                                 {service.icon}
                              </div>
@@ -201,6 +233,108 @@ export default function Home() {
                          </Card>
                      ))}
                  </div>
+            </div>
+        </section>
+
+        <section className="w-full py-16 md:py-24 bg-muted/20" id="pricing">
+            <div className="container mx-auto px-4">
+                <div className="text-center space-y-4 mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Flexible Plans for Every Team</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">Choose the right plan to match your project's needs and scale as you grow.</p>
+                </div>
+                <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3 items-start">
+                    {pricingPlans.map((plan) => (
+                      <Dialog key={plan.name} open={selectedPlan?.name === plan.name && selectedPlan.openDialog} onOpenChange={(open) => setSelectedPlan(p => p && {...p, openDialog: open })}>
+                        <Card className={`flex flex-col h-full bg-muted/30 border-border/50 hover:border-primary/50 transition-all duration-300 ${plan.popular ? 'border-primary/80 relative shadow-2xl shadow-primary/10' : ''}`}>
+                          {plan.popular && <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>}
+                          <CardHeader className="pt-10">
+                              <CardTitle className="font-headline text-2xl mb-2">{plan.name}</CardTitle>
+                              <CardDescription className="text-muted-foreground h-10">{plan.description}</CardDescription>
+                              <div className="text-4xl font-bold pt-4">{plan.price}<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
+                          </CardHeader>
+                          <CardContent className="flex-grow">
+                            <ul className="space-y-4">
+                                {plan.features.map(feature => (
+                                    <li key={feature} className="flex items-center gap-3">
+                                        <CheckCircle className="h-5 w-5 text-primary" />
+                                        <span className="text-muted-foreground">{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                          </CardContent>
+                          <CardFooter>
+                              {plan.price === 'Custom' ? (
+                                 <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full" size="lg">{plan.cta}</Button>
+                              ) : (
+                                <DialogTrigger asChild>
+                                  <Button onClick={() => setSelectedPlan({...plan, openDialog: true})} className="w-full" size="lg">{plan.cta}</Button>
+                                </DialogTrigger>
+                              )}
+                          </CardFooter>
+                        </Card>
+                        <DialogContent className="max-w-lg">
+                            <DialogHeader>
+                                <DialogTitle className="font-headline text-2xl">Complete Your Purchase</DialogTitle>
+                                <DialogDescription>
+                                    You've selected the <span className="font-bold text-primary">{selectedPlan?.name}</span> plan.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
+                                <div>
+                                    <h4 className="font-semibold mb-4">Payment Method</h4>
+                                    <RadioGroup defaultValue="card" className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="card" id="card" />
+                                            <Label htmlFor="card" className="flex items-center gap-2 cursor-pointer"><CreditCard/> Credit Card</Label>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="paypal" id="paypal" />
+                                            <Label htmlFor="paypal" className="flex items-center gap-2 cursor-pointer"><Landmark/> PayPal</Label>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="bank" id="bank" />
+                                            <Label htmlFor="bank" className="flex items-center gap-2 cursor-pointer"><Banknote/> Bank Transfer</Label>
+                                        </div>
+                                    </RadioGroup>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="card-number">Card Number</Label>
+                                        <Input id="card-number" placeholder="1234 5678 9012 3456" />
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div className="space-y-2 col-span-2">
+                                            <Label htmlFor="expiry">Expiry Date</Label>
+                                            <Input id="expiry" placeholder="MM/YY" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="cvc">CVC</Label>
+                                            <Input id="cvc" placeholder="123" />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="name-on-card">Name on Card</Label>
+                                        <Input id="name-on-card" placeholder="John Doe" />
+                                    </div>
+                                </div>
+                            </div>
+                            <DialogFooter className="pt-4">
+                                <DialogClose asChild>
+                                <Button size="lg" onClick={() => {
+                                    toast({
+                                        title: "Payment Successful!",
+                                        description: `Thank you for purchasing the ${selectedPlan?.name} plan.`,
+                                    });
+                                    setSelectedPlan(null); 
+                                }}>
+                                    Pay {selectedPlan?.price}
+                                </Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    ))}
+                </div>
             </div>
         </section>
 
@@ -213,7 +347,7 @@ export default function Home() {
                         <div className="grid gap-6 sm:grid-cols-2">
                             {whyChooseUs.map(item => (
                                 <div key={item.title} className="flex items-start gap-4">
-                                    {item.icon}
+                                    <div className="p-2 bg-primary/10 rounded-lg">{item.icon}</div>
                                     <div>
                                         <h4 className="font-semibold text-lg">{item.title}</h4>
                                         <p className="text-sm text-muted-foreground">{item.description}</p>
@@ -237,8 +371,8 @@ export default function Home() {
                 </div>
                 <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                     {techStack.map(tech => (
-                        <div key={tech} className="flex flex-col items-center gap-2 text-center text-muted-foreground hover:text-primary transition-colors">
-                           <Image src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-original.svg`} alt={tech} width={64} height={64} className="h-12 w-12 md:h-16 md:w-16" />
+                        <div key={tech} className="flex flex-col items-center gap-2 text-center text-muted-foreground hover:text-primary transition-colors cursor-pointer group">
+                           <Image src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-original.svg`} alt={tech} width={64} height={64} className="h-12 w-12 md:h-16 md:w-16 transition-transform duration-300 group-hover:scale-110" />
                            <span className="text-sm capitalize">{tech.replace('nodejs', 'Node.js').replace('nextjs', 'Next.js')}</span>
                         </div>
                     ))}
@@ -364,7 +498,7 @@ export default function Home() {
             </div>
         </div>
       </footer>
-
+      
       <AlertDialog open={isResultOpen} onOpenChange={setIsResultOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
