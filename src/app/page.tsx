@@ -5,6 +5,7 @@ import React from "react";
 import Image from "next/image";
 
 import image1 from './CF-FF_ADS_CAROUSEL-1080-x-1080-px-2-e1745984599904-1024x996.webp'
+import image2 from './CF-FF_ADS_CAROUSEL-1080-x-1080-px-5-1-1-1024x855.webp'
 import image3 from './CF-FF_ADS_CAROUSEL.webp'
 import image4 from './FF-FULLVIEW1-e1746439033331-1536x1395.webp'
 import client from './client2.jpeg'
@@ -19,6 +20,7 @@ export default function Home() {
   return (
     <HomeUI
       image1={image1}
+      image2={image2}
       image3={image3}
       image4={image4}
       client={client}

@@ -97,6 +97,7 @@ const faqs = [
 
 interface HomeUIProps {
   image1: StaticImageData;
+  image2: StaticImageData
   image3: StaticImageData;
   image4: StaticImageData;
   client: StaticImageData;
@@ -477,34 +478,35 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
         </section>
 
         <section className="w-full py-16 text-center">
-        <div className="container mx-auto px-4 md:px-6 space-y-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
-              <h3 className="text-3xl font-bold text-red-500 mb-4 text-center">BEFORE</h3>
-              <div className="bg-white rounded-lg shadow-inner p-4">
-                <Image src={before} alt="Messy workflow" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+          <div className="container mx-auto px-4 md:px-6 space-y-8">
+            <Image src={image2} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
+                <h3 className="text-3xl font-bold text-red-500 mb-4 text-center">BEFORE</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                  <Image src={before} alt="Messy workflow" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+                </div>
+                <ul className="mt-6 space-y-3 font-semibold text-lg text-red-700">
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>2 hours/day on messy Excel sheets</span></li>
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Late payments &amp; client fights</span></li>
+                  <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Overwhelmed by 50+ tasks daily</span></li>
+                </ul>
               </div>
-              <ul className="mt-6 space-y-3 font-semibold text-lg text-red-700">
-                <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>2 hours/day on messy Excel sheets</span></li>
-                <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Late payments &amp; client fights</span></li>
-                <li className="flex items-center gap-3"><MinusCircle className="h-6 w-6" /><span>Overwhelmed by 50+ tasks daily</span></li>
-              </ul>
-            </div>
 
-            <div className="bg-green-100 border-2 border-green-500 rounded-2xl p-6 text-left">
-              <h3 className="text-3xl font-bold text-green-500 mb-4 text-center">AFTER</h3>
-              <div className="bg-white rounded-lg shadow-inner p-4">
-                <Image src={after} alt="Organized workflow" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+              <div className="bg-green-100 border-2 border-green-500 rounded-2xl p-6 text-left">
+                <h3 className="text-3xl font-bold text-green-500 mb-4 text-center">AFTER</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                  <Image src={after} alt="Organized workflow" className="rounded-lg shadow-lg" data-ai-hint="dashboard analytics" />
+                </div>
+                <ul className="mt-6 space-y-3 font-semibold text-lg text-green-700">
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>15-minute daily check-ins</span></li>
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>95% on-time payments</span></li>
+                  <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>Smart priority tagging surfaces critical tasks instantly</span></li>
+                </ul>
               </div>
-              <ul className="mt-6 space-y-3 font-semibold text-lg text-green-700">
-                <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>15-minute daily check-ins</span></li>
-                <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>95% on-time payments</span></li>
-                <li className="flex items-center gap-3"><CheckCircle className="h-6 w-6" /><span>Smart priority tagging surfaces critical tasks instantly</span></li>
-              </ul>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
         <section className="w-full py-16 md:py-24 bg-secondary" id="trusted-by">
           <div className="container mx-auto px-4 md:px-6">
