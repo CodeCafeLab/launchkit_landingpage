@@ -1,8 +1,7 @@
-// This file uses server-side code.
 'use server';
 
 /**
- * @fileOverview Classifies and prioritizes leads submitted through the contact form.
+ * @fileOverview Classifies and prioritizes leads submitted through the contact form for CodeCafe Labs.
  *
  * - classifyLead - A function that handles the lead classification process.
  * - ClassifyLeadInput - The input type for the classifyLead function.
@@ -15,10 +14,11 @@ import {z} from 'genkit';
 const ClassifyLeadInputSchema = z.object({
   name: z.string().describe('The name of the lead.'),
   email: z.string().email().describe('The email address of the lead.'),
+  phone: z.string().optional().describe('The phone number of the lead.'),
   projectDetails: z
     .string()
     .describe(
-      'Detailed description of the project, which may include company name.'
+      'The message or project details provided by the lead.'
     ),
 });
 export type ClassifyLeadInput = z.infer<typeof ClassifyLeadInputSchema>;
@@ -43,28 +43,30 @@ const classifyLeadPrompt = ai.definePrompt({
   name: 'classifyLeadPrompt',
   input: {schema: ClassifyLeadInputSchema},
   output: {schema: ClassifyLeadOutputSchema},
-  prompt: `You are an AI assistant for a B2B lead generation agency from CodeCafe Labs, designed to classify leads from a contact form for a service called ClientBrew.
+  prompt: `You are an AI assistant for CodeCafe Labs, a web development agency. Your task is to classify incoming leads from the website's contact form.
 
-  Your goal is to determine if a lead is of High, Medium, or Low priority for LinkedIn outreach services.
+  Your goal is to determine if a lead is of High, Medium, or Low priority.
 
   High Priority:
-  - The user is from a B2B company (e.g., SaaS, Agency, Consulting).
-  - Their company seems established and a good fit for premium services.
-  - The lead provides a work email address.
+  - The project description is detailed and suggests a clear, well-funded project (e.g., "building a SaaS platform", "e-commerce marketplace").
+  - The lead is from an established company or a serious startup.
+  - They provide a work email and a phone number.
 
   Medium Priority:
-  - The user is a startup founder or from a smaller company.
-  - Their request is a bit generic but they seem serious.
+  - The project is smaller in scope (e.g., "landing page", "small business website").
+  - The request is a bit generic but seems serious.
+  - The lead provides a personal email (gmail, etc.) but the request is solid.
 
   Low Priority:
-  - The request is very vague or seems like spam.
-  - The email looks suspicious (e.g., generic gmail/hotmail for a company).
-  - They are just kicking tires and asking for general information without project specifics.
+  - The request is very vague, asking for "a price" without any details.
+  - The message seems like spam or a job application.
+  - They are just asking for general information without project specifics.
 
   Analyze the following lead information and classify its priority. Provide a concise reason for your classification.
 
   Lead Name: {{{name}}}
   Lead Email: {{{email}}}
+  Phone Number: {{{phone}}}
   Project Details: {{{projectDetails}}}
 
   Ensure that your output matches the following schema: {{$output}}

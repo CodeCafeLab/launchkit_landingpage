@@ -16,6 +16,9 @@ export default {
       },
     },
     extend: {
+      backgroundImage: {
+        'grid-white/[0.05]': 'linear-gradient(90deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 0), linear-gradient(180deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 0)',
+      },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
         headline: ['Space Grotesk', 'sans-serif'],
