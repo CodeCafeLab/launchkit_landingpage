@@ -71,18 +71,18 @@ const whyChooseUs = [
 ];
 
 const techStack = [
-    { name: 'React', icon: 'https://cdn.worldvectorlogo.com/logos/react-2.svg', hint: 'React logo' },
-    { name: 'Node.js', icon: 'https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg', hint: 'Nodejs logo' },
-    { name: 'Next.js', icon: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', hint: 'Nextjs logo' },
-    { name: 'MongoDB', icon: 'https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg', hint: 'MongoDB logo' },
-    { name: 'MySQL', icon: 'https://cdn.worldvectorlogo.com/logos/mysql-6.svg', hint: 'MySQL logo' },
-    { name: 'GraphQL', icon: 'https://cdn.worldvectorlogo.com/logos/graphql.svg', hint: 'GraphQL logo' },
-    { name: 'TypeScript', icon: 'https://cdn.worldvectorlogo.com/logos/typescript.svg', hint: 'TypeScript logo' },
-    { name: 'Docker', icon: 'https://cdn.worldvectorlogo.com/logos/docker.svg', hint: 'Docker logo' },
-    { name: 'Kubernetes', icon: 'https://cdn.worldvectorlogo.com/logos/kubernetes.svg', hint: 'Kubernetes logo' },
-    { name: 'AWS', icon: 'https://cdn.worldvectorlogo.com/logos/aws-2.svg', hint: 'AWS logo' },
-    { name: 'Google Cloud', icon: 'https://cdn.worldvectorlogo.com/logos/google-cloud-1.svg', hint: 'Google Cloud logo' },
-    { name: 'Firebase', icon: 'https://cdn.worldvectorlogo.com/logos/firebase-1.svg', hint: 'Firebase logo' },
+  { name: 'React', icon: 'https://cdn.worldvectorlogo.com/logos/react-2.svg', hint: 'React logo' },
+  { name: 'Node.js', icon: 'https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg', hint: 'Nodejs logo' },
+  { name: 'Next.js', icon: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', hint: 'Nextjs logo' },
+  { name: 'MongoDB', icon: 'https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg', hint: 'MongoDB logo' },
+  { name: 'MySQL', icon: 'https://cdn.worldvectorlogo.com/logos/mysql-6.svg', hint: 'MySQL logo' },
+  { name: 'GraphQL', icon: 'https://cdn.worldvectorlogo.com/logos/graphql.svg', hint: 'GraphQL logo' },
+  { name: 'TypeScript', icon: 'https://cdn.worldvectorlogo.com/logos/typescript.svg', hint: 'TypeScript logo' },
+  { name: 'Docker', icon: 'https://cdn.worldvectorlogo.com/logos/docker.svg', hint: 'Docker logo' },
+  { name: 'Kubernetes', icon: 'https://cdn.worldvectorlogo.com/logos/kubernetes.svg', hint: 'Kubernetes logo' },
+  { name: 'AWS', icon: 'https://cdn.worldvectorlogo.com/logos/aws-2.svg', hint: 'AWS logo' },
+  { name: 'Google Cloud', icon: 'https://cdn.worldvectorlogo.com/logos/google-cloud-1.svg', hint: 'Google Cloud logo' },
+  { name: 'Firebase', icon: 'https://cdn.worldvectorlogo.com/logos/firebase-1.svg', hint: 'Firebase logo' },
 ];
 
 const industries = ["EdTech", "FinTech", "Healthcare", "Logistics", "E-commerce", "SaaS", "Real Estate", "Travel"];
@@ -201,6 +201,11 @@ export default function Home() {
         <section className="relative w-full bg-hero-gradient" id="hero">
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
+              <section className="w-full py-16 md:py-24 text-center">
+                <div className="container mx-auto px-4 space-y-8">
+                  <Image src={image3} alt="Code snippet" width={800} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
+                </div>
+              </section>
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400">
                   Empower Your Business with <span className="text-primary">CodeCafe Labs</span>
@@ -216,9 +221,6 @@ export default function Home() {
                     Explore More
                   </Button>
                 </div>
-              </div>
-              <div className="hidden lg:flex justify-center">
-                 <Image src={image1} alt="Team discussing project" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
               </div>
             </div>
           </div>
@@ -254,17 +256,17 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
+
         <section className="w-full py-16 md:py-24 bg-secondary/20" id="why-us">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <Image src={image4} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team working" />
+                <Image src={image1} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
               </div>
               <div className="space-y-8">
                 <div className="text-left space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose CodeCafe Labs?</h2>
-                    <p className="text-muted-foreground max-w-2xl">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
+                  <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose CodeCafe Labs?</h2>
+                  <p className="text-muted-foreground max-w-2xl">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
                 </div>
                 <div className="space-y-6">
                   {whyChooseUs.map(item => (
@@ -297,24 +299,29 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <section className="w-full py-16  text-center">
+          <div className="container mx-auto px-4 space-y-8">
+            <Image src={image4} alt="App Screenshot"  className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
+          </div>
+        </section>
 
         <section className="w-full py-16 md:py-24 bg-secondary/20" id="tech-stack">
-            <div className="container mx-auto px-4">
-                <div className="text-center space-y-4 mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
-                    <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
-                </div>
-                <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
-                    {techStack.map(tech => (
-                        <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
-                            <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
-                                <Image src={tech.icon} alt={`${tech.name} logo`} width={48} height={48} className="object-contain" data-ai-hint={tech.hint} />
-                            </div>
-                            <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
-                        </div>
-                    ))}
-                </div>
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
             </div>
+            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
+              {techStack.map(tech => (
+                <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
+                  <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
+                    <Image src={tech.icon} alt={`${tech.name} logo`} width={48} height={48} className="object-contain" data-ai-hint={tech.hint} />
+                  </div>
+                  <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="w-full py-16 md:py-24" id="testimonials">
@@ -336,8 +343,8 @@ export default function Home() {
                     <div className="p-1 h-full">
                       <Card className="bg-secondary/30 border-border/50 h-full flex flex-col">
                         <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
-                            <Star className="w-5 h-5 text-yellow-400 mb-4" />
-                            <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote}"</p>
+                          <Star className="w-5 h-5 text-yellow-400 mb-4" />
+                          <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote}"</p>
                           <div className="flex items-center gap-4">
                             <Avatar>
                               <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
@@ -359,7 +366,7 @@ export default function Home() {
             </Carousel>
           </div>
         </section>
-        
+
         <section className="w-full py-16 md:py-24 bg-secondary/20" id="payment">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -477,11 +484,11 @@ export default function Home() {
           </div>
         </section>
 
+
         <section className="w-full py-16 md:py-24 text-center">
-            <div className="container mx-auto px-4 space-y-8">
-                 <Image src={image2} alt="App Screenshot" width={800} height={600} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
-                 <Image src={image3} alt="Code snippet" width={800} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
-            </div>
+          <div className="hidden lg:flex justify-center">
+            <Image src={image2} alt="Team discussing project" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
+          </div>
         </section>
 
       </main>
@@ -495,11 +502,11 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-                <ul className="space-y-2">
-                    {navLinks.map(link => (
-                        <li key={link.href}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
-                    ))}
-                </ul>
+              <ul className="space-y-2">
+                {navLinks.map(link => (
+                  <li key={link.href}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
+                ))}
+              </ul>
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Contact</h4>
@@ -598,3 +605,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
