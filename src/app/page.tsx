@@ -155,7 +155,7 @@ export default function Home() {
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground overflow-x-hidden">
       <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
-        <div className="container mx-auto flex items-center justify-between px-4">
+        <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <a href="#hero" className="flex items-center gap-2">
             <Code className="h-7 w-7 text-primary" />
             <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
@@ -199,7 +199,7 @@ export default function Home() {
 
       <main className="flex-1">
         <section className="relative w-full bg-hero-gradient" id="hero">
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter">
@@ -217,17 +217,15 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-              <section className="w-full py-16 md:py-24 text-center">
-                <div className="container mx-auto px-4 space-y-8">
-                  <Image src={image3} alt="Code snippet" width={800} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
-                </div>
-              </section>
+              <div className="flex justify-center items-center">
+                 <Image src={image3} alt="Code snippet" width={800} height={600} className="rounded-lg shadow-2xl mx-auto object-cover" data-ai-hint="code on screen" />
+              </div>
             </div>
           </div>
         </section>
 
         <section className="w-full py-12" id="trusted-by">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60">
               {[1, 2, 3, 4, 5, 6].map(i => (
@@ -238,7 +236,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="services">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">Build, Launch & Grow with Our Services</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">We offer a complete suite of services to bring your digital products to life, from initial concept to launch and beyond.</p>
@@ -258,7 +256,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24 bg-secondary" id="why-us">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
                 <Image src={image1} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
@@ -285,7 +283,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="industries">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">Industries We Serve</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">Our expertise spans across various industries, delivering tailored solutions that meet specific market needs.</p>
@@ -300,13 +298,13 @@ export default function Home() {
           </div>
         </section>
         <section className="w-full py-16 text-center">
-          <div className="container mx-auto px-4 space-y-8">
+          <div className="container mx-auto px-4 md:px-6 space-y-8">
             <Image src={image4} alt="App Screenshot"  className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
           </div>
         </section>
 
         <section className="w-full py-16 md:py-24 bg-secondary" id="tech-stack">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Tech Stack</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">We use a modern, robust, and scalable tech stack to build world-class applications.</p>
@@ -314,7 +312,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
               {techStack.map(tech => (
                 <div key={tech.name} className="group flex flex-col items-center gap-3 text-center w-24">
-                  <div className="grayscale-0 group-hover:grayscale-0 transition-all duration-300">
+                  <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
                     <Image src={tech.icon} alt={`${tech.name} logo`} width={48} height={48} className="object-contain" data-ai-hint={tech.hint} />
                   </div>
                   <p className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{tech.name}</p>
@@ -325,7 +323,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="testimonials">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">What Our Clients Say</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">Real stories from businesses we've helped empower.</p>
@@ -368,7 +366,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24 bg-secondary" id="payment">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold font-headline leading-tight">
@@ -419,7 +417,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="contact">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary p-8 md:p-12 rounded-lg border">
               <div className="space-y-6">
                 <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with CodeCafe Labs?</h2>
@@ -465,7 +463,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="faq">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold font-headline">Frequently Asked Questions</h2>
             </div>
@@ -486,15 +484,17 @@ export default function Home() {
 
 
         <section className="w-full py-16 md:py-24 text-center">
-          <div className="hidden lg:flex justify-center">
-            <Image src={image2} alt="Team discussing project" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
+          <div className="container mx-auto px-4 md:px-6">
+              <div className="hidden lg:flex justify-center">
+                <Image src={image2} alt="Team discussing project" width={600} height={600} className="rounded-lg shadow-2xl" data-ai-hint="team collaboration" />
+              </div>
           </div>
         </section>
 
       </main>
 
       <footer className="w-full bg-secondary border-t">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 md:px-6">
           <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
             <div className="md:col-span-1">
               <h4 className="font-semibold text-lg mb-4">About CodeCafe Labs</h4>
@@ -605,5 +605,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
