@@ -506,10 +506,10 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
         </div>
       </section>
 
-        <section className="w-full py-12" id="trusted-by">
+        <section className="w-full py-16 md:py-24 bg-secondary" id="trusted-by">
           <div className="container mx-auto px-4 md:px-6">
-            <h3 className="text-center text-muted-foreground text-lg mb-8">Trusted by 100+ Clients Across India</h3>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60">
+            <h3 className="text-center text-foreground font-headline text-2xl font-bold mb-8">Trusted by 100+ Clients Across India</h3>
+            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
               {[1, 2, 3, 4, 5, 6].map(i => (
                 <Image key={i} src={client} alt={`Client Logo ${i}`} width={120} height={40} className="object-contain" data-ai-hint="company logo" />
               ))}
