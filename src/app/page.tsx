@@ -479,8 +479,8 @@ export default function Home() {
 
         <section className="w-full py-16 md:py-24 text-center">
             <div className="container mx-auto px-4 space-y-8">
-                 <Image src={image2} alt="App Screenshot" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
-                 <Image src={image3} alt="Code snippet" width={600} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
+                 <Image src={image2} alt="App Screenshot" width={800} height={600} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="app screenshot" />
+                 <Image src={image3} alt="Code snippet" width={800} height={450} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="code on screen" />
             </div>
         </section>
 
