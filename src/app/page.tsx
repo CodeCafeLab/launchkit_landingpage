@@ -37,7 +37,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a href={href} className="text-muted-foreground hover:text-primary transition-colors">
+  <a href={href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
     {children}
   </a>
 );
@@ -104,7 +104,7 @@ export default function Home() {
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<(typeof pricingPlans[0] & {openDialog: boolean}) | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<(typeof pricingPlans[0]) | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -147,43 +147,45 @@ export default function Home() {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
-      <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-4 sticky top-0 z-50">
+      <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between px-4">
           <a href="#hero" className="flex items-center gap-2">
-            <Code className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold font-headline">CodeCafe Labs</span>
+            <Code className="h-7 w-7 text-primary" />
+            <span className="text-xl font-bold font-headline">CodeCafe Labs</span>
           </a>
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
-          </nav>
-          <div className="hidden md:block">
-            <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Book a Free Demo</Button>
-          </div>
-          <div className="md:hidden">
-              <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                  <SheetTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                          <Menu className="h-6 w-6" />
-                          <span className="sr-only">Open menu</span>
-                      </Button>
-                  </SheetTrigger>
-                  <SheetContent side="right" className="w-[280px] bg-background">
-                      <div className="flex flex-col h-full p-4">
-                          <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
-                              <Code className="h-8 w-8 text-primary" />
-                              <span className="text-2xl font-bold font-headline">CodeCafe Labs</span>
-                          </a>
-                          <nav className="flex flex-col gap-6 text-lg">
-                              {navLinks.map(link => (
-                                  <a key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary transition-colors">
-                                      {link.name}
-                                  </a>
-                              ))}
-                          </nav>
-                          <Button onClick={() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
-                      </div>
-                  </SheetContent>
-              </Sheet>
+          <div className="flex-1 flex items-center justify-end gap-8">
+            <nav className="hidden md:flex items-center gap-6">
+              {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
+            </nav>
+            <div className="hidden md:block">
+              <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Book a Free Demo</Button>
+            </div>
+            <div className="md:hidden">
+                <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                    <SheetTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                            <Menu className="h-6 w-6" />
+                            <span className="sr-only">Open menu</span>
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent side="right" className="w-[280px] bg-background">
+                        <div className="flex flex-col h-full p-4">
+                            <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
+                                <Code className="h-8 w-8 text-primary" />
+                                <span className="text-2xl font-bold font-headline">CodeCafe Labs</span>
+                            </a>
+                            <nav className="flex flex-col gap-6 text-lg">
+                                {navLinks.map(link => (
+                                    <a key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary transition-colors">
+                                        {link.name}
+                                    </a>
+                                ))}
+                            </nav>
+                            <Button onClick={() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }} className="mt-auto">Book a Free Demo</Button>
+                        </div>
+                    </SheetContent>
+                </Sheet>
+            </div>
           </div>
         </div>
       </header>
@@ -242,99 +244,99 @@ export default function Home() {
                     <h2 className="text-3xl md:text-4xl font-bold font-headline">Flexible Plans for Every Team</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">Choose the right plan to match your project's needs and scale as you grow.</p>
                 </div>
-                <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3 items-start">
-                    {pricingPlans.map((plan) => (
-                      <Dialog key={plan.name} open={selectedPlan?.name === plan.name && selectedPlan.openDialog} onOpenChange={(open) => setSelectedPlan(p => p && {...p, openDialog: open })}>
-                        <Card className={`flex flex-col h-full bg-muted/30 border-border/50 hover:border-primary/50 transition-all duration-300 ${plan.popular ? 'border-primary/80 relative shadow-2xl shadow-primary/10' : ''}`}>
-                          {plan.popular && <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>}
-                          <CardHeader className="pt-10">
-                              <CardTitle className="font-headline text-2xl mb-2">{plan.name}</CardTitle>
-                              <CardDescription className="text-muted-foreground h-10">{plan.description}</CardDescription>
-                              <div className="text-4xl font-bold pt-4">{plan.price}<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
-                          </CardHeader>
-                          <CardContent className="flex-grow">
-                            <ul className="space-y-4">
-                                {plan.features.map(feature => (
-                                    <li key={feature} className="flex items-center gap-3">
-                                        <CheckCircle className="h-5 w-5 text-primary" />
-                                        <span className="text-muted-foreground">{feature}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                          </CardContent>
-                          <CardFooter>
-                              {plan.price === 'Custom' ? (
-                                 <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full" size="lg">{plan.cta}</Button>
-                              ) : (
-                                <DialogTrigger asChild>
-                                  <Button onClick={() => setSelectedPlan({...plan, openDialog: true})} className="w-full" size="lg">{plan.cta}</Button>
-                                </DialogTrigger>
-                              )}
-                          </CardFooter>
-                        </Card>
-                        <DialogContent className="max-w-lg">
-                            <DialogHeader>
-                                <DialogTitle className="font-headline text-2xl">Complete Your Purchase</DialogTitle>
-                                <DialogDescription>
-                                    You've selected the <span className="font-bold text-primary">{selectedPlan?.name}</span> plan.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
-                                <div>
-                                    <h4 className="font-semibold mb-4">Payment Method</h4>
-                                    <RadioGroup defaultValue="card" className="space-y-2">
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="card" id="card" />
-                                            <Label htmlFor="card" className="flex items-center gap-2 cursor-pointer"><CreditCard/> Credit Card</Label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="paypal" id="paypal" />
-                                            <Label htmlFor="paypal" className="flex items-center gap-2 cursor-pointer"><Landmark/> PayPal</Label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="bank" id="bank" />
-                                            <Label htmlFor="bank" className="flex items-center gap-2 cursor-pointer"><Banknote/> Bank Transfer</Label>
-                                        </div>
-                                    </RadioGroup>
+                <Dialog open={!!selectedPlan} onOpenChange={(open) => !open && setSelectedPlan(null)}>
+                    <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3 items-start">
+                        {pricingPlans.map((plan) => (
+                          <Card key={plan.name} className={`flex flex-col h-full bg-muted/30 border-border/50 hover:border-primary/50 transition-all duration-300 ${plan.popular ? 'border-primary/80 relative shadow-2xl shadow-primary/10' : ''}`}>
+                            {plan.popular && <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>}
+                            <CardHeader className="pt-10">
+                                <CardTitle className="font-headline text-2xl mb-2">{plan.name}</CardTitle>
+                                <CardDescription className="text-muted-foreground h-10">{plan.description}</CardDescription>
+                                <div className="text-4xl font-bold pt-4">{plan.price}<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                              <ul className="space-y-4">
+                                  {plan.features.map(feature => (
+                                      <li key={feature} className="flex items-center gap-3">
+                                          <CheckCircle className="h-5 w-5 text-primary" />
+                                          <span className="text-muted-foreground">{feature}</span>
+                                      </li>
+                                  ))}
+                              </ul>
+                            </CardContent>
+                            <CardFooter>
+                                {plan.price === 'Custom' ? (
+                                   <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full" size="lg">{plan.cta}</Button>
+                                ) : (
+                                  <DialogTrigger asChild>
+                                    <Button onClick={() => setSelectedPlan(plan)} className="w-full" size="lg">{plan.cta}</Button>
+                                  </DialogTrigger>
+                                )}
+                            </CardFooter>
+                          </Card>
+                        ))}
+                    </div>
+                    <DialogContent className="max-w-lg">
+                        <DialogHeader>
+                            <DialogTitle className="font-headline text-2xl">Complete Your Purchase</DialogTitle>
+                            <DialogDescription>
+                                You've selected the <span className="font-bold text-primary">{selectedPlan?.name}</span> plan.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
+                            <div>
+                                <h4 className="font-semibold mb-4">Payment Method</h4>
+                                <RadioGroup defaultValue="card" className="space-y-2">
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="card" id="card" />
+                                        <Label htmlFor="card" className="flex items-center gap-2 cursor-pointer"><CreditCard/> Credit Card</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="paypal" id="paypal" />
+                                        <Label htmlFor="paypal" className="flex items-center gap-2 cursor-pointer"><Landmark/> PayPal</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="bank" id="bank" />
+                                        <Label htmlFor="bank" className="flex items-center gap-2 cursor-pointer"><Banknote/> Bank Transfer</Label>
+                                    </div>
+                                </RadioGroup>
+                            </div>
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="card-number">Card Number</Label>
+                                    <Input id="card-number" placeholder="1234 5678 9012 3456" />
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="card-number">Card Number</Label>
-                                        <Input id="card-number" placeholder="1234 5678 9012 3456" />
-                                    </div>
-                                    <div className="grid grid-cols-3 gap-4">
-                                        <div className="space-y-2 col-span-2">
-                                            <Label htmlFor="expiry">Expiry Date</Label>
-                                            <Input id="expiry" placeholder="MM/YY" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="cvc">CVC</Label>
-                                            <Input id="cvc" placeholder="123" />
-                                        </div>
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="space-y-2 col-span-2">
+                                        <Label htmlFor="expiry">Expiry Date</Label>
+                                        <Input id="expiry" placeholder="MM/YY" />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="name-on-card">Name on Card</Label>
-                                        <Input id="name-on-card" placeholder="John Doe" />
+                                        <Label htmlFor="cvc">CVC</Label>
+                                        <Input id="cvc" placeholder="123" />
                                     </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="name-on-card">Name on Card</Label>
+                                    <Input id="name-on-card" placeholder="John Doe" />
                                 </div>
                             </div>
-                            <DialogFooter className="pt-4">
-                                <DialogClose asChild>
-                                <Button size="lg" onClick={() => {
-                                    toast({
-                                        title: "Payment Successful!",
-                                        description: `Thank you for purchasing the ${selectedPlan?.name} plan.`,
-                                    });
-                                    setSelectedPlan(null); 
-                                }}>
-                                    Pay {selectedPlan?.price}
-                                </Button>
-                                </DialogClose>
-                            </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                    ))}
-                </div>
+                        </div>
+                        <DialogFooter className="pt-4">
+                            <DialogClose asChild>
+                            <Button size="lg" onClick={() => {
+                                toast({
+                                    title: "Payment Successful!",
+                                    description: `Thank you for purchasing the ${selectedPlan?.name} plan.`,
+                                });
+                                setSelectedPlan(null); 
+                            }}>
+                                Pay {selectedPlan?.price}
+                            </Button>
+                            </DialogClose>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </section>
 
@@ -526,3 +528,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
