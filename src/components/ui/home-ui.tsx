@@ -426,7 +426,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                   No subscriptions, No hassle. Love it or get your money back within 7 days.
                 </p>
                 <div className="p-4 bg-background border rounded-lg">
-                  <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a> for help</p>
+                  <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a></p>
                 </div>
               </div>
               <Card className="bg-card border shadow-2xl shadow-primary/10">
@@ -591,7 +591,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
               <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 {navLinks.map(link => (
-                  <li key={link.href}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
+                  <li key={link.name}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
                 ))}
               </ul>
             </div>
@@ -599,7 +599,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
               <h4 className="font-semibold text-lg mb-4">Legal</h4>
                 <ul className="space-y-2">
                   {footerLinks.map(link => (
-                    <li key={link.href}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
+                    <li key={link.name}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
                   ))}
                 </ul>
             </div>
