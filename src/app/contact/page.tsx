@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Rocket, Mail, Phone, MapPin } from 'lucide-react';
-import Link from 'next/link';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Contact Us | BizTrack Suite',
@@ -15,17 +14,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
     return (
         <div className="bg-background text-foreground">
-            <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
-                <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
-                    <Link href="/" className="flex items-center gap-2">
-                        <Rocket className="h-7 w-7 text-primary" />
-                        <span className="text-xl font-bold font-headline">BizTrack Suite</span>
-                    </Link>
-                    <Button asChild>
-                        <Link href="/">Back to Home</Link>
-                    </Button>
-                </div>
-            </header>
             <main className="container mx-auto px-4 md:px-6 py-16 md:py-24">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-12">

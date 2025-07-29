@@ -7,23 +7,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image, { StaticImageData } from "next/image";
 import {
-  Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart, Rocket, MinusCircle, Download
+  Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye,
+  ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, MinusCircle, Download, ShoppingCart
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadInput, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Carousel,
   CarouselContent,
@@ -48,13 +46,6 @@ const orderFormSchema = z.object({
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
-
-
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a href={href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-    {children}
-  </a>
-);
 
 const services = [
   { icon: <GitBranch className="h-8 w-8 text-primary" />, title: "Product Engineering", description: "End-to-end development of your product, from ideation and architecture to deployment and scaling." },
@@ -106,7 +97,6 @@ const faqs = [
 
 interface HomeUIProps {
   image1: StaticImageData;
-  image2: StaticImageData
   image3: StaticImageData;
   image4: StaticImageData;
   client: StaticImageData;
@@ -114,12 +104,11 @@ interface HomeUIProps {
   after: StaticImageData;
 }
 
-export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, client, before, after }) => {
+export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, before, after }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [orderDetails, setOrderDetails] = useState<OrderFormData | null>(null);
@@ -165,9 +154,6 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
     orderForm.reset();
     setCurrentStep(1);
     setOrderModalOpen(true);
-    if (isMobileMenuOpen) {
-      setMobileMenuOpen(false);
-    }
   }
   
   function onOrderSubmit(values: OrderFormData) {
@@ -193,71 +179,8 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
     }, 500);
   }
 
-  const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Why Us', href: '#why-us' },
-    { name: 'Testimonials', href: '#testimonials' },
-    { name: 'Contact', href: '#contact' },
-    { name: 'FAQ', href: '#faq' },
-  ];
-  
-  const footerLinks = [
-    { name: "Contact", href: "/contact" },
-    { name: "Privacy Policy", href: "/privacy-policy" },
-    { name: "Terms & Conditions", href: "/terms-and-conditions" },
-    { name: "Shipping and Delivery", href: "/shipping-and-delivery" },
-    { name: "Refund Policy", href: "/refund-policy" },
-  ];
-
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground overflow-x-hidden">
-      <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
-        <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
-          <a href="/" className="flex items-center gap-2">
-            <Rocket className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold font-headline">BizTrack Suite</span>
-          </a>
-          <div className="flex items-center gap-2">
-            <nav className="hidden md:flex items-center gap-6">
-              {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
-            </nav>
-            <div className="hidden md:block ml-4">
-              <Button onClick={() => document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' })}>Buy Now</Button>
-            </div>
-            <div className="md:hidden">
-              <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="h-6 w-6" />
-                    <span className="sr-only">Open menu</span>
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-[280px] bg-background">
-                  <div className="flex flex-col h-full p-4">
-                    <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
-                      <Rocket className="h-8 w-8 text-primary" />
-                      <span className="text-2xl font-bold font-headline">BizTrack Suite</span>
-                    </a>
-                    <nav className="flex flex-col gap-6 text-lg">
-                      {navLinks.map(link => (
-                        <a key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary transition-colors">
-                          {link.name}
-                        </a>
-                      ))}
-                    </nav>
-                    <Button onClick={() => {
-                        document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' });
-                        setMobileMenuOpen(false);
-                    }} className="mt-auto">Buy Now</Button>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1">
+    <>
         <section className="relative w-full bg-hero-gradient" id="hero">
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
@@ -513,9 +436,6 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
 
 
         <section className="w-full py-16 text-centerbg-secondary">
-          <div className="flex justify-center items-center rounded-lg  p-4">
-            <Image src={image2} alt="Why Choose Us" width={500} height={500} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
-          </div>
           <div className="container mx-auto px-4 md:px-6 space-y-8">
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-red-100 border-2 border-red-500 rounded-2xl p-6 text-left">
@@ -576,49 +496,6 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
             </div>
           </div>
         </section>
-
-      </main>
-
-      <footer className="w-full bg-secondary border-t">
-        <div className="container mx-auto px-4 py-8 md:px-6">
-          <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
-            <div className="md:col-span-1">
-              <h4 className="font-semibold text-lg mb-4">About BizTrack Suite</h4>
-              <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences that drive business growth.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                {navLinks.map(link => (
-                  <li key={link.name}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-lg mb-4">Legal</h4>
-                <ul className="space-y-2">
-                  {footerLinks.map(link => (
-                    <li key={link.name}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
-                  ))}
-                </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-lg mb-4">Follow Us</h4>
-              <div className="flex justify-center md:justify-start gap-4">
-                <a href="#" className="text-muted-foreground hover:text-primary"><Twitter className="h-6 w-6" /></a>
-                <a href="#" className="text-muted-foreground hover:text-primary"><Github className="h-6 w-6" /></a>
-                <a href="#" className="text-muted-foreground hover:text-primary"><Linkedin className="h-6 w-6" /></a>
-                <a href="#" className="text-muted-foreground hover:text-primary"><Instagram className="h-6 w-6" /></a>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-border mt-8 pt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} BizTrack Suite. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
 
       <AlertDialog open={isResultOpen} onOpenChange={setIsResultOpen}>
         <AlertDialogContent>
@@ -735,6 +612,6 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
 
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 };
