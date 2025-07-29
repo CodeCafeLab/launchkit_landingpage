@@ -2,16 +2,13 @@
 'use server';
 
 /**
- * @fileOverview Initiates a payment process with PhonePe.
- *
- * - initiatePayment - A function that starts the payment flow.
- * - InitiatePaymentInput - The input type for the initiatePayment function.
- * - InitiatePaymentOutput - The return type for the initiatePayment function.
+ * @fileOverview This file is now deprecated. 
+ * The payment logic has been moved to a dedicated Node.js backend service.
+ * The frontend now directly calls the backend API.
+ * This file is kept to avoid breaking existing import paths but should not be used for new development.
  */
 
 import { z } from 'zod';
-import axios from 'axios';
-import crypto from 'crypto';
 
 const InitiatePaymentInputSchema = z.object({
   name: z.string().describe("The customer's name."),
@@ -28,74 +25,10 @@ const InitiatePaymentOutputSchema = z.object({
 });
 export type InitiatePaymentOutput = z.infer<typeof InitiatePaymentOutputSchema>;
 
-// This function is the main entry point called by the frontend.
 export async function initiatePayment(input: InitiatePaymentInput): Promise<InitiatePaymentOutput> {
-  try {
-    const merchantTransactionId = 'MUID' + Date.now();
-    const { name, amount, userId } = input;
-    
-    const data = {
-      merchantId: process.env.PHONEPE_MERCHANT_ID!,
-      merchantTransactionId: merchantTransactionId,
-      merchantUserId: userId,
-      amount: amount * 100, // convert to paisa
-      redirectUrl: `http://localhost:9002/payment/status/${merchantTransactionId}`,
-      redirectMode: 'POST',
-      callbackUrl: `http://localhost:9002/api/payment/callback`,
-      mobileNumber: '9999999999', // Placeholder, replace with actual if available
-      paymentInstrument: {
-        type: 'PAY_PAGE',
-      },
-    };
-
-    const payload = JSON.stringify(data);
-    const payloadBuffer = Buffer.from(payload, 'utf-8');
-    const base64Payload = payloadBuffer.toString('base64');
-    
-    const saltKey = process.env.PHONEPE_SALT_KEY!;
-    const saltIndex = 1;
-
-    const stringToHash = base64Payload + '/pg/v1/pay' + saltKey;
-    const sha256Hash = crypto.createHash('sha256').update(stringToHash).digest('hex');
-    const xVerify = sha256Hash + '###' + saltIndex;
-
-    const options = {
-      method: 'post',
-      url: `${process.env.PHONEPE_HOST_URL}/pg/v1/pay`,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-VERIFY': xVerify,
-      },
-      data: {
-        request: base64Payload,
-      },
-    };
-
-    const response = await axios.request(options);
-
-    if (response.data.success) {
-      return {
-        success: true,
-        message: response.data.message,
-        redirectUrl: response.data.data.instrumentResponse.redirectInfo.url,
-      };
-    } else {
-      return {
-        success: false,
-        message: response.data.message || 'Payment initiation failed',
-      };
-    }
-  } catch (error) {
-    console.error('PhonePe API Error:', error);
-     let message = 'An unknown error occurred';
-    if (axios.isAxiosError(error) && error.response) {
-      message = error.response.data.message || 'Failed to connect to payment gateway';
-    } else if (error instanceof Error) {
-      message = error.message;
-    }
-    return {
-      success: false,
-      message: message,
-    };
-  }
+  console.error("DEPRECATED: initiatePayment function was called. This logic has moved to the external backend.");
+  return {
+    success: false,
+    message: "This payment function is deprecated and should not be called.",
+  };
 }

@@ -1,40 +1,25 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'crypto';
-import axios from 'axios';
 
-// Handles the callback from PhonePe after a payment attempt
+// This file is no longer used for handling the PhonePe callback.
+// The new Node.js backend at /backend/routes/payment.js handles the callback.
+// This file is kept to avoid breaking changes but can be removed if no longer referenced.
+
 export async function POST(req: NextRequest) {
   try {
-    const data = await req.json();
-    const saltKey = process.env.PHONEPE_SALT_KEY!;
-    const saltIndex = 1;
-
-    const receivedXVerify = req.headers.get('X-VERIFY');
-    const stringToHash = data.response + saltKey;
-    const sha256Hash = crypto.createHash('sha256').update(stringToHash).digest('hex');
-    const calculatedXVerify = sha256Hash + '###' + saltIndex;
+    console.warn("Received a request to the deprecated /api/payment callback. This should be handled by the external backend.");
     
-    // In a real app, you would verify the signature, but we skip it here for simplicity
-    // as the Vercel Hobby plan doesn't support environment variables for this kind of check easily.
-    // if (receivedXVerify !== calculatedXVerify) {
-    //   console.error("Callback signature mismatch");
-    //   return NextResponse.json({ success: false, message: 'Signature mismatch' }, { status: 400 });
-    // }
-
-    const payload = JSON.parse(Buffer.from(data.response, 'base64').toString());
-
-    // IMPORTANT: In a production environment, you should not trust the callback alone.
-    // You MUST call the PhonePe status check API to get the definitive status of the transaction.
-    // This is to prevent any client-side tampering.
-    console.log("Received payment callback:", payload);
-
-    // TODO: Update your database with the payment status (e.g., set order to paid)
-    // based on payload.code, which can be 'PAYMENT_SUCCESS', 'PAYMENT_ERROR', etc.
-    
-    // The redirect in the /payment/status/[transactionId] page will handle showing the final status.
-    return NextResponse.json({ success: true, data: payload });
+    // Respond with a clear message that this endpoint is deprecated.
+    return NextResponse.json(
+      { success: false, message: "This callback endpoint is deprecated. Please update your webhook configuration." },
+      { status: 410 } // 410 Gone
+    );
 
   } catch (error) {
-    console.error("Error processing PhonePe callback:", error);
-    return
+    console.error("Error processing deprecated PhonePe callback:", error);
+    return NextResponse.json(
+        { success: false, message: "An internal server error occurred." },
+        { status: 500 }
+    );
+  }
+}

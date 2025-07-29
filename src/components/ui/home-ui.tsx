@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image, { StaticImageData } from "next/image";
+import axios from 'axios';
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye,
   ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, MinusCircle, Download, ShoppingCart
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadInput, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
-import { initiatePayment, type InitiatePaymentInput, type InitiatePaymentOutput } from "@/ai/flows/payment-flow";
+// import { initiatePayment, type InitiatePaymentInput, type InitiatePaymentOutput } from "@/ai/flows/payment-flow";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -44,7 +45,6 @@ type FormData = z.infer<typeof formSchema>;
 const orderFormSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters."),
   email: z.string().email("Invalid email address."),
-  address: z.string().min(10, "Please enter a valid address."),
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
@@ -106,6 +106,9 @@ interface HomeUIProps {
   after: StaticImageData;
 }
 
+const BACKEND_URL = 'http://localhost:4000';
+
+
 export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, before, after }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,7 +123,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
   
   const orderForm = useForm<OrderFormData>({
     resolver: zodResolver(orderFormSchema),
-    defaultValues: { fullName: "", email: "", address: "" },
+    defaultValues: { fullName: "", email: "" },
   });
 
 
@@ -157,33 +160,38 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
   async function onOrderSubmit(values: OrderFormData) {
     setIsSubmitting(true);
     try {
-      const paymentInput: InitiatePaymentInput = {
+      const orderPayload = {
         name: values.fullName,
         email: values.email,
-        amount: 549,
+        amount: 549, // Amount in INR
         userId: 'CUID' + Date.now(),
       };
       
-      const result = await initiatePayment(paymentInput);
+      const { data } = await axios.post(`${BACKEND_URL}/api/payment/pay`, orderPayload);
       
-      if (result.success && result.redirectUrl) {
-        window.location.href = result.redirectUrl;
+      if (data.success && data.redirectUrl) {
+        window.location.href = data.redirectUrl;
       } else {
         toast({
           variant: "destructive",
           title: "Payment Failed",
-          description: result.message || "Could not initiate payment. Please try again.",
+          description: data.message || "Could not initiate payment. Please try again.",
         });
       }
     } catch (error) {
       console.error("Failed to initiate payment:", error);
+       let message = "An unexpected error occurred. Please try again later.";
+      if (axios.isAxiosError(error) && error.response) {
+        message = error.response.data.message || message;
+      }
       toast({
         variant: "destructive",
         title: "Payment Error",
-        description: "An unexpected error occurred. Please try again later.",
+        description: message,
       });
     } finally {
       setIsSubmitting(false);
+      setOrderModalOpen(false);
     }
   }
 
@@ -550,10 +558,8 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
                   <FormField control={orderForm.control} name="email" render={({ field }) => (
                     <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input placeholder="e.g. john@example.com" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
-                  <FormField control={orderForm.control} name="address" render={({ field }) => (
-                    <FormItem><FormLabel>Shipping Address (for billing)</FormLabel><FormControl><Textarea placeholder="Enter your full address" {...field} /></FormControl><FormMessage /></FormItem>
-                  )} />
                   <DialogFooter className="!mt-6">
+                     <Button type="button" variant="outline" onClick={() => setOrderModalOpen(false)}>Cancel</Button>
                     <Button type="submit" disabled={isSubmitting}>
                       {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</> : "Proceed to Payment"}
                     </Button>
@@ -565,5 +571,3 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
     </>
   );
 }
-
-    
