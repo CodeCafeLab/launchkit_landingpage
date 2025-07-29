@@ -177,7 +177,6 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
   
   const handlePayment = () => {
     setIsSubmitting(true);
-    // Simulate payment processing
     setTimeout(() => {
         toast({ title: "Payment Successful!", description: `Thank you for purchasing the Lifetime Access plan.` });
         setCurrentStep(3);
@@ -203,18 +202,18 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
   ];
   
   const footerLinks = [
-    { name: "Contact", href: "#contact" },
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms & Conditions", href: "#" },
-    { name: "Shipping and Delivery", href: "#" },
-    { name: "Refund Policy", href: "#" },
+    { name: "Contact", href: "/contact" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/terms-and-conditions" },
+    { name: "Shipping and Delivery", href: "/shipping-and-delivery" },
+    { name: "Refund Policy", href: "/refund-policy" },
   ];
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground overflow-x-hidden">
       <header className="w-full bg-background/80 border-b border-border/50 backdrop-blur-sm py-3 sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
-          <a href="#hero" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2">
             <Rocket className="h-7 w-7 text-primary" />
             <span className="text-xl font-bold font-headline">BizTrack Suite</span>
           </a>
