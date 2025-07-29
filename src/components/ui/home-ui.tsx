@@ -8,7 +8,7 @@ import { z } from "zod";
 import Image, { StaticImageData } from "next/image";
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye, Menu, X,
-  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart, Rocket, MinusCircle
+  Linkedin, Twitter, Github, Instagram, ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, Settings, Search, LineChart, CreditCard, Lock, Check, ShoppingCart, Rocket, MinusCircle, Download
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadInput, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -40,6 +40,15 @@ const formSchema = z.object({
 });
 
 type FormData = z.infer<typeof formSchema>;
+
+const orderFormSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters."),
+  email: z.string().email("Invalid email address."),
+  address: z.string().min(10, "Please enter a valid address."),
+});
+
+type OrderFormData = z.infer<typeof orderFormSchema>;
+
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a href={href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
@@ -81,10 +90,10 @@ const techStack = [
 const industries = ["EdTech", "FinTech", "Healthcare", "Logistics", "E-commerce", "SaaS", "Real Estate", "Travel"];
 
 const testimonials = [
-  { quote: "Working with LaunchKit was a game-changer for our business. Their team is incredibly talented and delivered a product that exceeded all our expectations. Highly recommended!", name: "Priya Sharma", company: "Founder, Edutech Innovations", avatar: "https://placehold.co/100x100.png", hint: "woman portrait" },
-  { quote: "The professionalism and technical expertise of the LaunchKit team are top-notch. They transformed our vision into a reality with a seamless and efficient process.", name: "Rohan Gupta", company: "CEO, HealthFirst", avatar: "https://placehold.co/100x100.png", hint: "man portrait" },
+  { quote: "Working with BizTrack Suite was a game-changer for our business. Their team is incredibly talented and delivered a product that exceeded all our expectations. Highly recommended!", name: "Priya Sharma", company: "Founder, Edutech Innovations", avatar: "https://placehold.co/100x100.png", hint: "woman portrait" },
+  { quote: "The professionalism and technical expertise of the BizTrack Suite team are top-notch. They transformed our vision into a reality with a seamless and efficient process.", name: "Rohan Gupta", company: "CEO, HealthFirst", avatar: "https://placehold.co/100x100.png", hint: "man portrait" },
   { quote: "I'm so impressed with the final product. The UI/UX is fantastic, and the app is incredibly fast and responsive. I couldn't be happier with the results.", name: "Anjali Mehta", company: "Product Manager, FinConnect", avatar: "https://placehold.co/100x100.png", hint: "woman face" },
-  { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at LaunchKit was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
+  { quote: "The mobile app they developed for us is intuitive and has received amazing feedback from our users. The team at BizTrack Suite was responsive and a pleasure to work with.", name: "Sameer Khan", company: "Director, TravelSphere", avatar: "https://placehold.co/100x100.png", hint: "man face" },
 ];
 
 const faqs = [
@@ -111,12 +120,20 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [isOrderModalOpen, setOrderModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [orderDetails, setOrderDetails] = useState<OrderFormData | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: "", email: "", phone: "", message: "" },
   });
+  
+  const orderForm = useForm<OrderFormData>({
+    resolver: zodResolver(orderFormSchema),
+    defaultValues: { fullName: "", email: "", address: "" },
+  });
+
 
   async function onSubmit(values: FormData) {
     setIsSubmitting(true);
@@ -144,10 +161,37 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
   }
 
   const handleBuyNowClick = () => {
-    document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' });
+    setOrderDetails(null);
+    orderForm.reset();
+    setCurrentStep(1);
+    setOrderModalOpen(true);
     if (isMobileMenuOpen) {
       setMobileMenuOpen(false);
     }
+  }
+  
+  function onOrderSubmit(values: OrderFormData) {
+    setOrderDetails(values);
+    setCurrentStep(2);
+  }
+  
+  const handlePayment = () => {
+    setIsSubmitting(true);
+    // Simulate payment processing
+    setTimeout(() => {
+        toast({ title: "Payment Successful!", description: `Thank you for purchasing the Lifetime Access plan.` });
+        setCurrentStep(3);
+        setIsSubmitting(false);
+    }, 2000);
+  };
+  
+  const resetFlow = () => {
+    setOrderModalOpen(false);
+    setTimeout(() => {
+        setCurrentStep(1);
+        setOrderDetails(null);
+        orderForm.reset();
+    }, 500);
   }
 
   const navLinks = [
@@ -157,6 +201,14 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
     { name: 'Contact', href: '#contact' },
     { name: 'FAQ', href: '#faq' },
   ];
+  
+  const footerLinks = [
+    { name: "Contact", href: "#contact" },
+    { name: "Privacy Policy", href: "#" },
+    { name: "Terms & Conditions", href: "#" },
+    { name: "Shipping and Delivery", href: "#" },
+    { name: "Refund Policy", href: "#" },
+  ];
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground overflow-x-hidden">
@@ -164,14 +216,14 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
         <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
           <a href="#hero" className="flex items-center gap-2">
             <Rocket className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold font-headline">LaunchKit</span>
+            <span className="text-xl font-bold font-headline">BizTrack Suite</span>
           </a>
           <div className="flex items-center gap-2">
             <nav className="hidden md:flex items-center gap-6">
               {navLinks.map(link => <NavLink key={link.href} href={link.href}>{link.name}</NavLink>)}
             </nav>
             <div className="hidden md:block ml-4">
-              <Button onClick={handleBuyNowClick}>Buy Now</Button>
+              <Button onClick={() => document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' })}>Buy Now</Button>
             </div>
             <div className="md:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -185,7 +237,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                   <div className="flex flex-col h-full p-4">
                     <a href="#hero" className="flex items-center gap-2 mb-8" onClick={() => setMobileMenuOpen(false)}>
                       <Rocket className="h-8 w-8 text-primary" />
-                      <span className="text-2xl font-bold font-headline">LaunchKit</span>
+                      <span className="text-2xl font-bold font-headline">BizTrack Suite</span>
                     </a>
                     <nav className="flex flex-col gap-6 text-lg">
                       {navLinks.map(link => (
@@ -194,7 +246,10 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                         </a>
                       ))}
                     </nav>
-                    <Button onClick={handleBuyNowClick} className="mt-auto">Buy Now</Button>
+                    <Button onClick={() => {
+                        document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' });
+                        setMobileMenuOpen(false);
+                    }} className="mt-auto">Buy Now</Button>
                   </div>
                 </SheetContent>
               </Sheet>
@@ -209,13 +264,13 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter">
-                  Empower Your Business with <span className="text-primary">LaunchKit</span>
+                  Empower Your Business with <span className="text-primary">BizTrack Suite</span>
                 </h1>
                 <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
                   Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups &amp; businesses.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button size="lg" onClick={handleBuyNowClick}>
+                  <Button size="lg" onClick={() => document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' })}>
                     Buy Now <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                   <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -258,7 +313,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
               </div>
               <div className="space-y-8">
                 <div className="text-left space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose LaunchKit?</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose BizTrack Suite?</h2>
                   <p className="text-muted-foreground max-w-2xl">We're not just a service provider; we're your dedicated partner in achieving digital excellence. Our commitment to quality, innovation, and client success sets us apart.</p>
                 </div>
                 <div className="space-y-6">
@@ -337,7 +392,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                       <Card className="bg-card border h-full flex flex-col">
                         <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
                           <Star className="w-5 h-5 text-yellow-400 mb-4" />
-                          <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote.replace(/CodeCafe Labs/g, 'LaunchKit')}"</p>
+                          <p className="italic text-foreground mb-6 flex-grow">"{testimonial.quote.replace(/BizTrack Suite/g, 'BizTrack Suite')}"</p>
                           <div className="flex items-center gap-4">
                             <Avatar>
                               <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
@@ -371,7 +426,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                   No subscriptions, No hassle. Love it or get your money back within 7 days.
                 </p>
                 <div className="p-4 bg-background border rounded-lg">
-                  <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@launchkit.com" className="text-primary hover:underline">support@launchkit.com</a> for help</p>
+                  <p className="text-muted-foreground">If you ever run into any issues or get stuck, you're not alone—just email us at <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a> for help</p>
                 </div>
               </div>
               <Card className="bg-card border shadow-2xl shadow-primary/10">
@@ -385,7 +440,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                   </div>
                   <p className="text-primary font-semibold mb-6">40% OFFER WITH EVERYTHING INCLUDED</p>
 
-                  <Button onClick={() => setPaymentModalOpen(true)} className="w-full text-lg" size="lg">
+                  <Button onClick={handleBuyNowClick} className="w-full text-lg" size="lg">
                     <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
                   </Button>
 
@@ -415,7 +470,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary p-8 md:p-12 rounded-lg border">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with LaunchKit?</h2>
+                <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with BizTrack Suite?</h2>
                 <p className="text-muted-foreground">Let's discuss your project over a free demo call. Fill out the form, and our team will get back to you within 24 hours.</p>
                 <div className="border-t border-border pt-6 space-y-4">
                   <div className="flex items-center gap-4 text-muted-foreground"><CheckCircle className="h-5 w-5 text-primary" /> Submit the form with your project idea.</div>
@@ -529,7 +584,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
         <div className="container mx-auto px-4 py-8 md:px-6">
           <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
             <div className="md:col-span-1">
-              <h4 className="font-semibold text-lg mb-4">About LaunchKit</h4>
+              <h4 className="font-semibold text-lg mb-4">About BizTrack Suite</h4>
               <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences that drive business growth.</p>
             </div>
             <div>
@@ -541,9 +596,12 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-lg mb-4">Contact</h4>
-              <a href="mailto:contact@launchkit.com" className="text-sm text-muted-foreground hover:text-primary block">contact@launchkit.com</a>
-              <a href="tel:+919876543210" className="text-sm text-muted-foreground hover:text-primary block">+91 98765 43210</a>
+              <h4 className="font-semibold text-lg mb-4">Legal</h4>
+                <ul className="space-y-2">
+                  {footerLinks.map(link => (
+                    <li key={link.href}><a href={link.href} className="text-sm text-muted-foreground hover:text-primary">{link.name}</a></li>
+                  ))}
+                </ul>
             </div>
             <div>
               <h4 className="font-semibold text-lg mb-4">Follow Us</h4>
@@ -557,7 +615,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
           </div>
           <div className="border-t border-border mt-8 pt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} LaunchKit. All rights reserved.
+              © {new Date().getFullYear()} BizTrack Suite. All rights reserved.
             </p>
           </div>
         </div>
@@ -589,51 +647,95 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
         </AlertDialogContent>
       </AlertDialog>
 
-      <Dialog open={isPaymentModalOpen} onOpenChange={setPaymentModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Complete Your Purchase</DialogTitle>
-            <DialogDescription>
-              You're choosing the Lifetime Access plan for <strong>₹549</strong>. No credit card required for demo.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="card-number">Card Number</Label>
-              <div className="relative">
-                <Input id="card-number" placeholder="0000 0000 0000 0000" />
-                <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <Dialog open={isOrderModalOpen} onOpenChange={setOrderModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          {currentStep === 1 && (
+            <>
+              <DialogHeader>
+                <DialogTitle>Order Information</DialogTitle>
+                <DialogDescription>
+                  Please provide your details to proceed with the order.
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...orderForm}>
+                <form onSubmit={orderForm.handleSubmit(onOrderSubmit)} className="space-y-4">
+                  <FormField control={orderForm.control} name="fullName" render={({ field }) => (
+                    <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="e.g. John Doe" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={orderForm.control} name="email" render={({ field }) => (
+                    <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input placeholder="e.g. john@example.com" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={orderForm.control} name="address" render={({ field }) => (
+                    <FormItem><FormLabel>Shipping Address</FormLabel><FormControl><Textarea placeholder="Enter your full address" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <DialogFooter className="!mt-6">
+                    <Button type="submit">Proceed to Payment</Button>
+                  </DialogFooter>
+                </form>
+              </Form>
+            </>
+          )}
+
+          {currentStep === 2 && (
+            <>
+              <DialogHeader>
+                <DialogTitle>Simulated Payment</DialogTitle>
+                <DialogDescription>
+                  This is a simulated PhonePe payment gateway.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4 text-center">
+                 <p className="font-semibold">Total Amount: ₹549</p>
+                 <p className="text-sm text-muted-foreground">Click below to "pay".</p>
+                 <div className="my-6">
+                    <Image src="https://www.logo.wine/a/logo/PhonePe/PhonePe-Logo.wine.svg" alt="PhonePe Logo" width={150} height={50} className="mx-auto"/>
+                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="expiry-date">Expiry Date</Label>
-                <Input id="expiry-date" placeholder="MM/YY" />
+              <DialogFooter>
+                <Button onClick={() => setCurrentStep(1)} variant="outline">Back</Button>
+                <Button onClick={handlePayment} disabled={isSubmitting}>
+                  {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</> : "Pay ₹549"}
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+          
+          {currentStep === 3 && orderDetails && (
+             <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                    <CheckCircle className="h-6 w-6 text-green-500" />
+                    Order Successful!
+                </DialogTitle>
+                <DialogDescription>
+                  Your order has been confirmed. You can download your files now.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4 space-y-4">
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-base">Order Details</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-sm space-y-2">
+                        <p><strong>Full Name:</strong> {orderDetails.fullName}</p>
+                        <p><strong>Email:</strong> {orderDetails.email}</p>
+                        <p><strong>Address:</strong> {orderDetails.address}</p>
+                        <p><strong>Amount Paid:</strong> ₹549</p>
+                    </CardContent>
+                </Card>
+                 <Button className="w-full">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Files
+                </Button>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="cvc">CVC</Label>
-                <div className="relative">
-                  <Input id="cvc" placeholder="123" />
-                  <Lock className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                </div>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="name-on-card">Name on Card</Label>
-              <Input id="name-on-card" placeholder="John Doe" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit" className="w-full" onClick={() => {
-              setPaymentModalOpen(false);
-              toast({ title: "Payment Successful!", description: `Thank you for purchasing the Lifetime Access plan.` });
-            }}>
-              Pay ₹549
-            </Button>
-          </DialogFooter>
+              <DialogFooter>
+                <Button onClick={resetFlow}>Close</Button>
+              </DialogFooter>
+            </>
+          )}
+
         </DialogContent>
       </Dialog>
-
     </div>
   );
 };
