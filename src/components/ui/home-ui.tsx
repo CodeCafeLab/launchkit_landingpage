@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 
 import { classifyLead, type ClassifyLeadInput, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
+import { initiatePayment, type InitiatePaymentInput, type InitiatePaymentOutput } from "@/ai/flows/payment-flow";
+
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -110,9 +112,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
-  const [orderDetails, setOrderDetails] = useState<OrderFormData | null>(null);
-
+  
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: "", email: "", phone: "", message: "" },
@@ -150,37 +150,46 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
   }
 
   const handleBuyNowClick = () => {
-    setOrderDetails(null);
     orderForm.reset();
-    setCurrentStep(1);
     setOrderModalOpen(true);
   }
   
-  function onOrderSubmit(values: OrderFormData) {
-    setOrderDetails(values);
-    setCurrentStep(2);
-  }
-  
-  const handlePayment = () => {
+  async function onOrderSubmit(values: OrderFormData) {
     setIsSubmitting(true);
-    setTimeout(() => {
-        toast({ title: "Payment Successful!", description: `Thank you for purchasing the Lifetime Access plan.` });
-        setCurrentStep(3);
-        setIsSubmitting(false);
-    }, 2000);
-  };
-  
-  const resetFlow = () => {
-    setOrderModalOpen(false);
-    setTimeout(() => {
-        setCurrentStep(1);
-        setOrderDetails(null);
-        orderForm.reset();
-    }, 500);
+    try {
+      const paymentInput: InitiatePaymentInput = {
+        name: values.fullName,
+        email: values.email,
+        amount: 549,
+        userId: 'CUID' + Date.now(),
+      };
+      
+      const result = await initiatePayment(paymentInput);
+      
+      if (result.success && result.redirectUrl) {
+        window.location.href = result.redirectUrl;
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Payment Failed",
+          description: result.message || "Could not initiate payment. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to initiate payment:", error);
+      toast({
+        variant: "destructive",
+        title: "Payment Error",
+        description: "An unexpected error occurred. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <>
+        <div className="w-full overflow-x-hidden">
         <section className="relative w-full bg-hero-gradient" id="hero">
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
@@ -496,6 +505,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
             </div>
           </div>
         </section>
+        </div>
 
       <AlertDialog open={isResultOpen} onOpenChange={setIsResultOpen}>
         <AlertDialogContent>
@@ -525,8 +535,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
 
       <Dialog open={isOrderModalOpen} onOpenChange={setOrderModalOpen}>
         <DialogContent className="sm:max-w-md">
-          {currentStep === 1 && (
-            <>
+          
               <DialogHeader>
                 <DialogTitle>Order Information</DialogTitle>
                 <DialogDescription>
@@ -542,76 +551,16 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
                     <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input placeholder="e.g. john@example.com" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   <FormField control={orderForm.control} name="address" render={({ field }) => (
-                    <FormItem><FormLabel>Shipping Address</FormLabel><FormControl><Textarea placeholder="Enter your full address" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Shipping Address (for billing)</FormLabel><FormControl><Textarea placeholder="Enter your full address" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   <DialogFooter className="!mt-6">
-                    <Button type="submit">Proceed to Payment</Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</> : "Proceed to Payment"}
+                    </Button>
                   </DialogFooter>
                 </form>
               </Form>
-            </>
-          )}
-
-          {currentStep === 2 && (
-            <>
-              <DialogHeader>
-                <DialogTitle>Simulated Payment</DialogTitle>
-                <DialogDescription>
-                  This is a simulated PhonePe payment gateway.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="py-4 text-center">
-                 <p className="font-semibold">Total Amount: ₹549</p>
-                 <p className="text-sm text-muted-foreground">Click below to "pay".</p>
-                 <div className="my-6">
-                    <Image src="https://www.logo.wine/a/logo/PhonePe/PhonePe-Logo.wine.svg" alt="PhonePe Logo" width={150} height={50} className="mx-auto"/>
-                 </div>
-              </div>
-              <DialogFooter>
-                <Button onClick={() => setCurrentStep(1)} variant="outline">Back</Button>
-                <Button onClick={handlePayment} disabled={isSubmitting}>
-                  {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</> : "Pay ₹549"}
-                </Button>
-              </DialogFooter>
-            </>
-          )}
-          
-          {currentStep === 3 && orderDetails && (
-             <>
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
-                    <CheckCircle className="h-6 w-6 text-green-500" />
-                    Order Successful!
-                </DialogTitle>
-                <DialogDescription>
-                  Your order has been confirmed. You can download your files now.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="py-4 space-y-4">
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="text-base">Order Details</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-sm space-y-2">
-                        <p><strong>Full Name:</strong> {orderDetails.fullName}</p>
-                        <p><strong>Email:</strong> {orderDetails.email}</p>
-                        <p><strong>Address:</strong> {orderDetails.address}</p>
-                        <p><strong>Amount Paid:</strong> ₹549</p>
-                    </CardContent>
-                </Card>
-                 <Button className="w-full">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Files
-                </Button>
-              </div>
-              <DialogFooter>
-                <Button onClick={resetFlow}>Close</Button>
-              </DialogFooter>
-            </>
-          )}
-
         </DialogContent>
       </Dialog>
     </>
-  );
-};
+  
