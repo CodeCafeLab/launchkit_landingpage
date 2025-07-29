@@ -509,7 +509,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
               {classificationResult && (
                 <div className="p-4 border rounded-lg bg-muted/50 space-y-3">
                   <h4 className="font-semibold text-foreground">Internal Lead Analysis:</h4>
-                  <p className="text-sm text-muted-foreground">Priority: <span className={classificationResult.priority === 'High' ? 'text-destructive' : classificationResult.priority === 'Medium' ? 'text-yellow-500' : 'text-green-500'}>{classificationResult.priority}</span></p>
+                  <p className="text-sm">Priority: <span className={classificationResult.priority === 'High' ? 'text-destructive font-bold' : classificationResult.priority === 'Medium' ? 'text-yellow-600 font-bold' : 'text-green-600 font-bold'}>{classificationResult.priority}</span></p>
                   <p className="text-sm text-muted-foreground">{classificationResult.classificationReason}</p>
                 </div>
               )}
