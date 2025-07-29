@@ -563,4 +563,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
         </DialogContent>
       </Dialog>
     </>
-  
+  );
+}
+
+    

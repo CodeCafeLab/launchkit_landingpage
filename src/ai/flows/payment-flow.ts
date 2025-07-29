@@ -110,3 +110,5 @@ const initiatePaymentFlow = ai.defineFlow(
         message: message,
       };
     }
+  }
+);
