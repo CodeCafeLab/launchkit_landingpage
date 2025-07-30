@@ -90,6 +90,7 @@ const faqs = [
 
 interface HomeUIProps {
   image1: StaticImageData;
+  image2: StaticImageData;
   image3: StaticImageData;
   image4: StaticImageData;
   client: StaticImageData;
@@ -97,7 +98,7 @@ interface HomeUIProps {
   after: StaticImageData;
 }
 
-export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, before, after }) => {
+export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, client, before, after }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
