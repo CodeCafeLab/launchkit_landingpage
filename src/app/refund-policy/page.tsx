@@ -1,5 +1,6 @@
 
 import { Metadata } from 'next';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
     title: 'Refund Policy | BizTrack Suite',
@@ -8,40 +9,43 @@ export const metadata: Metadata = {
 
 export default function RefundPolicyPage() {
     return (
-        <div className="bg-background text-foreground">
+        <div className="bg-secondary">
             <main className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-                <div className="max-w-3xl mx-auto prose dark:prose-invert prose-lg">
-                    <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold font-headline">Refund Policy</h1>
-                        <p className="mt-2 text-muted-foreground">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                    </div>
+                <Card className="max-w-4xl mx-auto shadow-lg">
+                    <CardHeader className="text-center border-b">
+                        <CardTitle className="text-4xl md:text-5xl font-bold font-headline">Refund Policy</CardTitle>
+                        <p className="pt-2 text-muted-foreground">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </CardHeader>
+                    <CardContent className="p-8 md:p-12">
+                        <div className="prose dark:prose-invert prose-lg max-w-none">
+                            <h2 className="font-headline text-2xl mt-8">1. Overview</h2>
+                            <p>We stand behind our products and services and want our customers to be satisfied. We offer a 7-day money-back guarantee on our one-time purchase digital product, as stated on our sales page.</p>
 
-                    <h2 className="font-headline text-2xl mt-8">1. Overview</h2>
-                    <p>We stand behind our products and services and want our customers to be satisfied. We offer a 7-day money-back guarantee on our one-time purchase digital product, as stated on our sales page.</p>
+                            <h2 className="font-headline text-2xl mt-8">2. One-Time Purchase Digital Product</h2>
+                            <p>For our lifetime access digital product sold for a one-time fee, you are eligible for a full refund if you request it within 7 days of the purchase date. To request a refund, please email our support team with your order details. No questions will be asked, but we appreciate any feedback you can provide.</p>
+                            <p>After the 7-day period, no refunds will be issued.</p>
+                            
+                            <h2 className="font-headline text-2xl mt-8">3. Custom Development Services</h2>
+                            <p>Payments for custom software development services are tied to project milestones and are non-refundable once a milestone is approved and payment is made. This is because our team allocates resources and incurs costs at each stage of the project. If you are unsatisfied with the service, please contact us to discuss a potential resolution.</p>
+                            
+                            <h2 className="font-headline text-2xl mt-8">4. How to Request a Refund</h2>
+                            <p>To request a refund for an eligible product, please send an email to <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a>. Please include the following information:</p>
+                            <ul className="list-disc pl-6 space-y-2">
+                                <li>Your full name</li>
+                                <li>Email address used for the purchase</li>
+                                <li>Order/transaction number</li>
+                                <li>Reason for the refund request (optional, but helpful)</li>
+                            </ul>
 
-                    <h2 className="font-headline text-2xl mt-8">2. One-Time Purchase Digital Product</h2>
-                    <p>For our lifetime access digital product sold for a one-time fee, you are eligible for a full refund if you request it within 7 days of the purchase date. To request a refund, please email our support team with your order details. No questions will be asked, but we appreciate any feedback you can provide.</p>
-                    <p>After the 7-day period, no refunds will be issued.</p>
-                    
-                    <h2 className="font-headline text-2xl mt-8">3. Custom Development Services</h2>
-                    <p>Payments for custom software development services are tied to project milestones and are non-refundable once a milestone is approved and payment is made. This is because our team allocates resources and incurs costs at each stage of the project. If you are unsatisfied with the service, please contact us to discuss a potential resolution.</p>
-                    
-                    <h2 className="font-headline text-2xl mt-8">4. How to Request a Refund</h2>
-                    <p>To request a refund for an eligible product, please send an email to <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a>. Please include the following information:</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                        <li>Your full name</li>
-                        <li>Email address used for the purchase</li>
-                        <li>Order/transaction number</li>
-                        <li>Reason for the refund request (optional, but helpful)</li>
-                    </ul>
+                            <h2 className="font-headline text-2xl mt-8">5. Processing Time</h2>
+                            <p>Refunds will be processed within 5-7 business days of receiving your request. The refund will be issued to the original payment method used for the purchase.</p>
 
-                    <h2 className="font-headline text-2xl mt-8">5. Processing Time</h2>
-                    <p>Refunds will be processed within 5-7 business days of receiving your request. The refund will be issued to the original payment method used for the purchase.</p>
-
-                    <h2 className="font-headline text-2xl mt-8">Contact Us</h2>
-                    <p>If you have any questions about our Refund Policy, please contact us.</p>
-                    <p>Email: <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a></p>
-                </div>
+                            <h2 className="font-headline text-2xl mt-8">Contact Us</h2>
+                            <p>If you have any questions about our Refund Policy, please contact us.</p>
+                            <p>Email: <a href="mailto:support@biztracksuite.com" className="text-primary hover:underline">support@biztracksuite.com</a></p>
+                        </div>
+                    </CardContent>
+                </Card>
             </main>
         </div>
     );
