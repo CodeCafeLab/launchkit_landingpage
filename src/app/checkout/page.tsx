@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axios from 'axios';
-import { Loader2, Rocket, Lock } from 'lucide-react';
+import { Loader2, Rocket, Lock, CheckCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -16,8 +16,10 @@ import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 
 const orderFormSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters."),
+  firstName: z.string().min(2, "First name must be at least 2 characters."),
+  lastName: z.string().min(2, "Last name must be at least 2 characters."),
   email: z.string().email("Invalid email address."),
+  streetAddress: z.string().min(5, "Street address is required."),
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
@@ -30,14 +32,14 @@ export default function CheckoutPage() {
 
   const form = useForm<OrderFormData>({
     resolver: zodResolver(orderFormSchema),
-    defaultValues: { fullName: "", email: "" },
+    defaultValues: { firstName: "", lastName: "", email: "", streetAddress: "" },
   });
 
   async function onSubmit(values: OrderFormData) {
     setIsSubmitting(true);
     try {
       const orderPayload = {
-        name: values.fullName,
+        name: `${values.firstName} ${values.lastName}`,
         email: values.email,
         amount: 549, // Amount in INR
         userId: 'CUID' + Date.now(),
@@ -71,98 +73,109 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="w-full bg-secondary">
-      <main className="container mx-auto px-4 md:px-6 py-12 md:py-20 min-h-[calc(100vh-80px)]">
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Left Column */}
-          <div className="space-y-8">
-            <div className="flex items-center gap-3">
-              <Rocket className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold font-headline">BizTrack Suite</span>
+    <div className="w-full bg-background text-foreground">
+      <main className="container mx-auto px-4 md:px-6 py-12 md:py-20">
+        <div className="text-center mb-10">
+            <h1 className="text-4xl font-bold tracking-tight font-headline">CHECKOUT</h1>
+        </div>
+
+        <div className="max-w-4xl mx-auto mb-8">
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative flex items-center justify-between" role="alert">
+                <div className="flex items-center">
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    <span className="block sm:inline">"BizTrack Suite - Lifetime Access" has been added to your cart.</span>
+                </div>
+                <Button variant="outline" size="sm" className="bg-white text-gray-700 border-gray-300 hover:bg-gray-50">View cart</Button>
             </div>
+        </div>
 
-            <Card className="bg-background">
-              <CardHeader>
-                <CardTitle className="text-2xl">Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField control={form.control} name="fullName" render={({ field }) => (
+        <div className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+          {/* Left Column - Billing Details */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-semibold font-headline border-b pb-4">Billing Details</h2>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField control={form.control} name="firstName" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl><Input placeholder="e.g. John Doe" {...field} /></FormControl>
+                        <FormLabel>First Name <span className="text-destructive">*</span></FormLabel>
+                        <FormControl><Input placeholder="First Name" {...field} className="bg-secondary/50" /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <FormField control={form.control} name="email" render={({ field }) => (
+                    <FormField control={form.control} name="lastName" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email Address</FormLabel>
-                        <FormControl><Input placeholder="e.g. john@example.com" {...field} /></FormControl>
+                        <FormLabel>Last Name <span className="text-destructive">*</span></FormLabel>
+                        <FormControl><Input placeholder="Last Name" {...field} className="bg-secondary/50"/></FormControl>
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <Button type="submit" disabled={isSubmitting} className="w-full text-lg mt-4" size="lg">
-                      {isSubmitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</> : "Place Order"}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
+                </div>
+                <FormField control={form.control} name="email" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email Address <span className="text-destructive">*</span></FormLabel>
+                    <FormControl><Input placeholder="e.g. john@example.com" {...field} className="bg-secondary/50" /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                 <FormItem>
+                    <FormLabel>Country / Region <span className="text-destructive">*</span></FormLabel>
+                    <p className="font-medium">India</p>
+                </FormItem>
+                 <FormField control={form.control} name="streetAddress" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Street address <span className="text-destructive">*</span></FormLabel>
+                    <FormControl><Input placeholder="House number and street name" {...field} className="bg-secondary/50"/></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
 
-             <p className="text-xs text-center text-muted-foreground pt-2">
-                By placing your order, you agree to our <a href="/terms-and-conditions" className="text-primary hover:underline">Terms & Conditions</a> and <a href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</a>.
-            </p>
+                {/* This button is part of the form on the left, but visually acts on the whole page */}
+                 <Button type="submit" disabled={isSubmitting} className="w-full text-lg !mt-8" size="lg">
+                  {isSubmitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</> : "Place Order"}
+                </Button>
+                 <p className="text-xs text-center text-muted-foreground pt-2">
+                    By placing your order, you agree to our <a href="/terms-and-conditions" className="text-primary hover:underline">Terms & Conditions</a>.
+                </p>
+              </form>
+            </Form>
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-8">
-            <Card className="bg-background">
-              <CardHeader>
-                <CardTitle className="text-2xl">Order Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-secondary rounded-lg p-2">
-                        <Rocket className="h-8 w-8 text-primary"/>
-                    </div>
-                    <div>
-                        <p className="font-semibold">BizTrack Suite - Lifetime Access</p>
-                        <p className="text-sm text-muted-foreground">One-time payment</p>
-                    </div>
+          {/* Right Column - Order Summary */}
+          <div className="space-y-6">
+            <div className="border rounded-lg p-6 bg-secondary/30">
+                <h2 className="text-2xl font-semibold font-headline border-b pb-4 mb-6">Your Order</h2>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center font-medium">
+                    <p>Product</p>
+                    <p>Subtotal</p>
                   </div>
-                  <p className="font-semibold text-lg">₹549.00</p>
-                </div>
-                <Separator />
-                <div className="space-y-2">
-                    <div className="flex justify-between">
-                        <p className="text-muted-foreground">Subtotal</p>
-                        <p>₹549.00</p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="text-muted-foreground">Discount (40%)</p>
-                        <p className="text-green-600">-₹450.00</p>
-                    </div>
-                </div>
-                <Separator />
-                <div className="flex justify-between font-bold text-xl">
+                  <Separator />
+                  <div className="flex justify-between items-center">
+                    <p className="text-muted-foreground">BizTrack Suite - Lifetime Access × 1</p>
+                    <p className="font-medium">₹549.00</p>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between items-center font-medium">
+                    <p>Subtotal</p>
+                    <p>₹549.00</p>
+                  </div>
+                   <Separator />
+                  <div className="flex justify-between items-center font-bold text-xl">
                     <p>Total</p>
                     <p>₹549.00</p>
+                  </div>
                 </div>
-              </CardContent>
-               <CardContent>
-                <div className="flex items-center gap-3 text-sm text-muted-foreground p-4 bg-secondary rounded-lg">
-                    <Lock className="h-5 w-5 text-primary"/>
-                    <span>Secure payment powered by PhonePe. All major UPI, Credit/Debit cards accepted.</span>
+                 <div className="mt-8 p-4 bg-background/50 rounded-lg">
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <Lock className="h-5 w-5 text-primary flex-shrink-0"/>
+                        <span>Secure payment powered by PhonePe. All major UPI, Credit/Debit cards accepted.</span>
+                    </div>
                 </div>
-               </CardContent>
-            </Card>
+            </div>
           </div>
         </div>
       </main>
     </div>
   );
 }
-
-    
