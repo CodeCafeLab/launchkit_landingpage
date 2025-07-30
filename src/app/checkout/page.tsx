@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axios from 'axios';
-import { Loader2, Rocket, Lock, CheckCircle } from 'lucide-react';
+import { Loader2, CheckCircle, Lock } from 'lucide-react';
+import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -20,6 +21,8 @@ const orderFormSchema = z.object({
   lastName: z.string().min(2, "Last name must be at least 2 characters."),
   email: z.string().email("Invalid email address."),
   streetAddress: z.string().min(5, "Street address is required."),
+  pinCode: z.string().min(6, "A valid 6-digit PIN code is required.").max(6),
+  state: z.string().min(2, "State is required."),
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
@@ -32,7 +35,14 @@ export default function CheckoutPage() {
 
   const form = useForm<OrderFormData>({
     resolver: zodResolver(orderFormSchema),
-    defaultValues: { firstName: "", lastName: "", email: "", streetAddress: "" },
+    defaultValues: { 
+      firstName: "", 
+      lastName: "", 
+      email: "", 
+      streetAddress: "",
+      pinCode: "",
+      state: "",
+    },
   });
 
   async function onSubmit(values: OrderFormData) {
@@ -89,92 +99,115 @@ export default function CheckoutPage() {
             </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
-          {/* Left Column - Billing Details */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold font-headline border-b pb-4">Billing Details</h2>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <FormField control={form.control} name="firstName" render={({ field }) => (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                {/* Left Column - Billing Details */}
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-semibold font-headline border-b pb-4">Billing Details</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <FormField control={form.control} name="firstName" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>First Name <span className="text-destructive">*</span></FormLabel>
+                            <FormControl><Input placeholder="First Name" {...field} className="bg-secondary/50" /></FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )} />
+                        <FormField control={form.control} name="lastName" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Last Name <span className="text-destructive">*</span></FormLabel>
+                            <FormControl><Input placeholder="Last Name" {...field} className="bg-secondary/50"/></FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )} />
+                    </div>
+                    
+                    <FormItem>
+                        <FormLabel>Country / Region <span className="text-destructive">*</span></FormLabel>
+                        <p className="font-medium">India</p>
+                    </FormItem>
+                    
+                    <FormField control={form.control} name="streetAddress" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>First Name <span className="text-destructive">*</span></FormLabel>
-                        <FormControl><Input placeholder="First Name" {...field} className="bg-secondary/50" /></FormControl>
+                        <FormLabel>Street address <span className="text-destructive">*</span></FormLabel>
+                        <FormControl><Input placeholder="House number and street name" {...field} className="bg-secondary/50"/></FormControl>
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <FormField control={form.control} name="lastName" render={({ field }) => (
+
+                    <FormField control={form.control} name="state" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Last Name <span className="text-destructive">*</span></FormLabel>
-                        <FormControl><Input placeholder="Last Name" {...field} className="bg-secondary/50"/></FormControl>
+                        <FormLabel>State <span className="text-destructive">*</span></FormLabel>
+                        <FormControl><Input placeholder="State" {...field} className="bg-secondary/50" /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )} />
-                </div>
-                <FormField control={form.control} name="email" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email Address <span className="text-destructive">*</span></FormLabel>
-                    <FormControl><Input placeholder="e.g. john@example.com" {...field} className="bg-secondary/50" /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-                 <FormItem>
-                    <FormLabel>Country / Region <span className="text-destructive">*</span></FormLabel>
-                    <p className="font-medium">India</p>
-                </FormItem>
-                 <FormField control={form.control} name="streetAddress" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Street address <span className="text-destructive">*</span></FormLabel>
-                    <FormControl><Input placeholder="House number and street name" {...field} className="bg-secondary/50"/></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
 
-                {/* This button is part of the form on the left, but visually acts on the whole page */}
-                 <Button type="submit" disabled={isSubmitting} className="w-full text-lg !mt-8" size="lg">
-                  {isSubmitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</> : "Place Order"}
-                </Button>
-                 <p className="text-xs text-center text-muted-foreground pt-2">
-                    By placing your order, you agree to our <a href="/terms-and-conditions" className="text-primary hover:underline">Terms & Conditions</a>.
-                </p>
-              </form>
-            </Form>
-          </div>
+                    <FormField control={form.control} name="pinCode" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>PIN Code <span className="text-destructive">*</span></FormLabel>
+                        <FormControl><Input placeholder="PIN Code" {...field} className="bg-secondary/50" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
 
-          {/* Right Column - Order Summary */}
-          <div className="space-y-6">
-            <div className="border rounded-lg p-6 bg-secondary/30">
-                <h2 className="text-2xl font-semibold font-headline border-b pb-4 mb-6">Your Order</h2>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center font-medium">
-                    <p>Product</p>
-                    <p>Subtotal</p>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between items-center">
-                    <p className="text-muted-foreground">BizTrack Suite - Lifetime Access × 1</p>
-                    <p className="font-medium">₹549.00</p>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between items-center font-medium">
-                    <p>Subtotal</p>
-                    <p>₹549.00</p>
-                  </div>
-                   <Separator />
-                  <div className="flex justify-between items-center font-bold text-xl">
-                    <p>Total</p>
-                    <p>₹549.00</p>
-                  </div>
+                    <FormField control={form.control} name="email" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email Address <span className="text-destructive">*</span></FormLabel>
+                        <FormControl><Input placeholder="e.g. john@example.com" {...field} className="bg-secondary/50" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+
+                    <p className="text-xs text-center text-muted-foreground pt-2">
+                        By placing your order, you agree to our <a href="/terms-and-conditions" className="text-primary hover:underline">Terms & Conditions</a>.
+                    </p>
                 </div>
-                 <div className="mt-8 p-4 bg-background/50 rounded-lg">
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                        <Lock className="h-5 w-5 text-primary flex-shrink-0"/>
-                        <span>Secure payment powered by PhonePe. All major UPI, Credit/Debit cards accepted.</span>
+
+                {/* Right Column - Order Summary */}
+                <div className="space-y-6">
+                    <div className="border rounded-lg p-6 bg-secondary/30">
+                        <h2 className="text-2xl font-semibold font-headline border-b pb-4 mb-6">Your Order</h2>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center font-medium">
+                                <p>Product</p>
+                                <p>Subtotal</p>
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between items-center">
+                                <p className="text-muted-foreground">BizTrack Suite - Lifetime Access × 1</p>
+                                <p className="font-medium">₹549.00</p>
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between items-center font-medium">
+                                <p>Subtotal</p>
+                                <p>₹549.00</p>
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between items-center font-bold text-xl">
+                                <p>Total</p>
+                                <p>₹549.00</p>
+                            </div>
+                        </div>
+                        
+                        <div className="mt-8 border rounded-lg p-4 bg-background">
+                            <h3 className="font-medium mb-4">PhonePe Payment Solutions</h3>
+                            <div className="flex items-center gap-4">
+                                <Image src="https://assetcdn.phonepe.com/images/business-website/phonepe-logo-full.svg" alt="PhonePe Logo" width={100} height={28} />
+                                <span className="text-xs text-muted-foreground">UPI, Credit/Debit Card, Netbanking</span>
+                            </div>
+                            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md text-center">
+                                <p className="text-xs text-red-600">All UPI apps, Debit and Credit Cards, and NetBanking accepted | Powered by PhonePe</p>
+                            </div>
+                            
+                            <Button type="submit" disabled={isSubmitting} className="w-full text-lg mt-6" size="lg" variant="destructive">
+                                {isSubmitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...</> : "Place Order"}
+                            </Button>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-          </div>
-        </div>
+            </form>
+        </Form>
       </main>
     </div>
   );
