@@ -1,4 +1,3 @@
-
 const mysql = require('mysql2/promise');
 
 const db = mysql.createPool({
@@ -15,7 +14,7 @@ const createTransactionsTable = async () => {
     const connection = await db.getConnection();
     try {
         const sql = `
-        CREATE TABLE transactions (
+        CREATE TABLE IF NOT EXISTS transactions (
             id INT AUTO_INCREMENT PRIMARY KEY,
             merchantTransactionId VARCHAR(255) NOT NULL UNIQUE,
             userId VARCHAR(255),
