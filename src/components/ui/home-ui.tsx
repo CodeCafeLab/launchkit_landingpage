@@ -6,14 +6,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image, { StaticImageData } from "next/image";
-import axios from 'axios';
+import Link from 'next/link';
 import {
   Loader2, Zap, Code, Star, Users, Cloud, CheckCircle, Smartphone, PenTool, GitBranch, Server, FastForward, Scaling, UserCheck, Eye,
   ArrowRight, BrainCircuit, Lightbulb, ShieldCheck, DollarSign, MinusCircle, Download, ShoppingCart
 } from "lucide-react";
 
-import { classifyLead, type ClassifyLeadInput, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
-// import { initiatePayment, type InitiatePaymentInput, type InitiatePaymentOutput } from "@/ai/flows/payment-flow";
+import { classifyLead, type ClassifyLeadOutput } from "@/ai/flows/classify-lead";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -21,7 +20,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -41,13 +39,6 @@ const formSchema = z.object({
 });
 
 type FormData = z.infer<typeof formSchema>;
-
-const orderFormSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters."),
-  email: z.string().email("Invalid email address."),
-});
-
-type OrderFormData = z.infer<typeof orderFormSchema>;
 
 const services = [
   { icon: <GitBranch className="h-8 w-8 text-primary" />, title: "Product Engineering", description: "End-to-end development of your product, from ideation and architecture to deployment and scaling." },
@@ -106,27 +97,17 @@ interface HomeUIProps {
   after: StaticImageData;
 }
 
-const BACKEND_URL = 'http://localhost:4000';
-
-
 export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, before, after }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [classificationResult, setClassificationResult] = useState<ClassifyLeadOutput | null>(null);
   const [isResultOpen, setIsResultOpen] = useState(false);
-  const [isOrderModalOpen, setOrderModalOpen] = useState(false);
   
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: "", email: "", phone: "", message: "" },
   });
   
-  const orderForm = useForm<OrderFormData>({
-    resolver: zodResolver(orderFormSchema),
-    defaultValues: { fullName: "", email: "" },
-  });
-
-
   async function onSubmit(values: FormData) {
     setIsSubmitting(true);
     setClassificationResult(null);
@@ -152,49 +133,6 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
     }
   }
 
-  const handleBuyNowClick = () => {
-    orderForm.reset();
-    setOrderModalOpen(true);
-  }
-  
-  async function onOrderSubmit(values: OrderFormData) {
-    setIsSubmitting(true);
-    try {
-      const orderPayload = {
-        name: values.fullName,
-        email: values.email,
-        amount: 549, // Amount in INR
-        userId: 'CUID' + Date.now(),
-      };
-      
-      const { data } = await axios.post(`${BACKEND_URL}/api/payment/pay`, orderPayload);
-      
-      if (data.success && data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Payment Failed",
-          description: data.message || "Could not initiate payment. Please try again.",
-        });
-      }
-    } catch (error) {
-      console.error("Failed to initiate payment:", error);
-       let message = "An unexpected error occurred. Please try again later.";
-      if (axios.isAxiosError(error) && error.response) {
-        message = error.response.data.message || message;
-      }
-      toast({
-        variant: "destructive",
-        title: "Payment Error",
-        description: message,
-      });
-    } finally {
-      setIsSubmitting(false);
-      setOrderModalOpen(false);
-    }
-  }
-
   return (
     <>
         <div className="w-full overflow-x-hidden">
@@ -209,8 +147,8 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
                   Launch your MVP 2x faster with our full-stack team. We build scalable apps for growing startups &amp; businesses.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button size="lg" onClick={() => document.getElementById('payment')?.scrollIntoView({ behavior: 'smooth' })}>
-                    Buy Now <ArrowRight className="ml-2 h-5 w-5" />
+                  <Button size="lg" asChild>
+                    <Link href="/checkout">Buy Now <ArrowRight className="ml-2 h-5 w-5" /></Link>
                   </Button>
                   <Button size="lg" variant="outline" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
                     Explore More
@@ -379,8 +317,10 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
                   </div>
                   <p className="text-primary font-semibold mb-6">40% OFFER WITH EVERYTHING INCLUDED</p>
 
-                  <Button onClick={handleBuyNowClick} className="w-full text-lg" size="lg">
-                    <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
+                  <Button asChild className="w-full text-lg" size="lg">
+                    <Link href="/checkout">
+                      <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
+                    </Link>
                   </Button>
 
                   <p className="text-center text-muted-foreground mt-4 text-sm font-semibold">7-Days Money Back Guarantee (No Questions Asked)</p>
@@ -540,34 +480,8 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image3, image4, client, 
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      <Dialog open={isOrderModalOpen} onOpenChange={setOrderModalOpen}>
-        <DialogContent className="sm:max-w-md">
-          
-              <DialogHeader>
-                <DialogTitle>Order Information</DialogTitle>
-                <DialogDescription>
-                  Please provide your details to proceed with the order.
-                </DialogDescription>
-              </DialogHeader>
-              <Form {...orderForm}>
-                <form onSubmit={orderForm.handleSubmit(onOrderSubmit)} className="space-y-4">
-                  <FormField control={orderForm.control} name="fullName" render={({ field }) => (
-                    <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="e.g. John Doe" {...field} /></FormControl><FormMessage /></FormItem>
-                  )} />
-                  <FormField control={orderForm.control} name="email" render={({ field }) => (
-                    <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input placeholder="e.g. john@example.com" {...field} /></FormControl><FormMessage /></FormItem>
-                  )} />
-                  <DialogFooter className="!mt-6">
-                     <Button type="button" variant="outline" onClick={() => setOrderModalOpen(false)}>Cancel</Button>
-                    <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</> : "Proceed to Payment"}
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
+
+    

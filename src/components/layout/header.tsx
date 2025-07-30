@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Rocket, Menu } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useRouter } from 'next/navigation';
 
 const NavLink = ({ href, children, onClick }: { href: string; children: React.ReactNode, onClick?: () => void }) => (
   <Link href={href} onClick={onClick} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
@@ -15,6 +16,7 @@ const NavLink = ({ href, children, onClick }: { href: string; children: React.Re
 
 export function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   const navLinks = [
     { name: 'Services', href: '/#services' },
@@ -25,12 +27,7 @@ export function Header() {
   ];
 
   const handleBuyNowClick = () => {
-    const paymentSection = document.getElementById('payment');
-    if (paymentSection) {
-        paymentSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        window.location.href = '/#payment';
-    }
+    router.push('/checkout');
     if (isMobileMenuOpen) {
         setMobileMenuOpen(false);
     }
@@ -81,3 +78,5 @@ export function Header() {
     </header>
   );
 }
+
+    
