@@ -104,7 +104,7 @@ export default function ContactPage() {
                                 </CardContent>
                             </Card>
 
-                            <div className="space-y-8">
+                            <div className="space-y-8 mt-12 md:mt-0">
                                 <Card className="shadow-lg">
                                     <CardHeader>
                                         <CardTitle>Contact Information</CardTitle>
@@ -114,7 +114,7 @@ export default function ContactPage() {
                                             <Mail className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                                             <div>
                                                 <h3 className="font-semibold text-lg">Email</h3>
-                                                <a href="mailto:support@biztracksuite.com" className="text-muted-foreground hover:text-primary transition-colors">support@biztracksuite.com</a>
+                                                <a href="mailto:support@biztracksuite.com" className="text-muted-foreground hover:text-primary transition-colors break-all">support@biztracksuite.com</a>
                                             </div>
                                         </div>
                                         <div className="flex items-start gap-4">

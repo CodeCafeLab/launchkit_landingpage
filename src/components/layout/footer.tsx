@@ -25,11 +25,11 @@ export function Footer() {
     <footer className="w-full bg-secondary border-t">
       <div className="container mx-auto px-4 py-8 md:px-6">
         <div className="grid md:grid-cols-4 gap-8 text-center md:text-left">
-          <div className="md:col-span-1">
-            <h4 className="font-semibold text-lg mb-4">About BizTrack Suite</h4>
+          <div className="md:col-span-1 space-y-4">
+            <h4 className="font-semibold text-lg">About BizTrack Suite</h4>
             <p className="text-sm text-muted-foreground">We are a team of passionate developers and designers dedicated to building exceptional digital experiences that drive business growth.</p>
           </div>
-          <div>
+          <div className="md:col-start-2">
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {navLinks.map(link => (

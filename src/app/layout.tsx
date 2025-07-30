@@ -45,7 +45,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased bg-background text-foreground flex flex-col min-h-dvh overflow-x-hidden">
+      <body className="font-body antialiased bg-background text-foreground flex flex-col min-h-dvh">
         <Header />
         <main className="flex-1 w-full">
           {children}

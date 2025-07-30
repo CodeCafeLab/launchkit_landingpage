@@ -136,12 +136,12 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
 
   return (
     <>
-        <div className="w-full overflow-x-hidden">
+        <div className="w-full">
         <section className="relative w-full bg-hero-gradient" id="hero">
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
+            <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-16 md:py-20">
               <div className="text-center lg:text-left">
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tighter">
                   Empower Your Business with <span className="text-primary">BizTrack Suite</span>
                 </h1>
                 <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
@@ -287,8 +287,8 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
             </Carousel>
           </div>
         </section>
@@ -297,7 +297,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <h2 className="text-4xl md:text-5xl font-bold font-headline leading-tight">
+                <h2 className="text-3xl md:text-4xl font-bold font-headline leading-tight">
                   Your <span className="text-primary underline decoration-wavy decoration-from-font">one-time payment</span> grants lifetime access
                 </h2>
                 <p className="text-muted-foreground text-lg">
@@ -348,7 +348,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
 
         <section className="w-full py-16 md:py-24" id="contact">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid lg:grid-cols-2 gap-16 items-center bg-secondary p-8 md:p-12 rounded-lg border">
+            <div className="grid lg:grid-cols-2 gap-12 items-center bg-secondary p-6 md:p-12 rounded-lg border">
               <div className="space-y-6">
                 <h2 className="text-3xl md:text-4xl font-bold font-headline">Ready to Build with BizTrack Suite?</h2>
                 <p className="text-muted-foreground">Let's discuss your project over a free demo call. Fill out the form, and our team will get back to you within 24 hours.</p>
@@ -484,5 +484,3 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
     </>
   );
 }
-
-    

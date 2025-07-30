@@ -87,16 +87,16 @@ export default function CheckoutPage() {
     <div className="w-full bg-background text-foreground">
       <main className="container mx-auto px-4 md:px-6 py-12 md:py-20">
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold tracking-tight font-headline">CHECKOUT</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight font-headline">CHECKOUT</h1>
         </div>
 
         <div className="max-w-4xl mx-auto mb-8">
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative flex items-center justify-between" role="alert">
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative flex flex-col sm:flex-row items-center justify-between gap-4" role="alert">
             <div className="flex items-center">
               <CheckCircle className="h-5 w-5 mr-2" />
               <span className="block sm:inline">"BizTrack Suite - Lifetime Access" has been added to your cart.</span>
             </div>
-            <Button variant="outline" size="sm" className="bg-white text-gray-700 border-gray-300 hover:bg-gray-50">View cart</Button>
+            <Button variant="outline" size="sm" className="bg-white text-gray-700 border-gray-300 hover:bg-gray-50 w-full sm:w-auto">View cart</Button>
           </div>
         </div>
 
@@ -104,7 +104,7 @@ export default function CheckoutPage() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
             {/* Left Column - Billing Details */}
             <div className="space-y-6">
-              <h2 className="text-2xl font-semibold font-headline border-b pb-4">Billing Details</h2>
+              <h2 className="text-xl md:text-2xl font-semibold font-headline border-b pb-4">Billing Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField control={form.control} name="firstName" render={({ field }) => (
                   <FormItem>
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
             {/* Right Column - Order Summary */}
             <div className="space-y-6">
               <div className="border rounded-lg p-6 bg-secondary/30">
-                <h2 className="text-2xl font-semibold font-headline border-b pb-4 mb-6">Your Order</h2>
+                <h2 className="text-xl md:text-2xl font-semibold font-headline border-b pb-4 mb-6">Your Order</h2>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center font-medium">
                     <p>Product</p>
@@ -184,7 +184,7 @@ export default function CheckoutPage() {
                     <p>₹549.00</p>
                   </div>
                   <Separator />
-                  <div className="flex justify-between items-center font-bold text-xl">
+                  <div className="flex justify-between items-center font-bold text-lg md:text-xl">
                     <p>Total</p>
                     <p>₹549.00</p>
                   </div>
