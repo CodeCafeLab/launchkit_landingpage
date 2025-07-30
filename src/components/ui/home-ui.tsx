@@ -136,7 +136,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
 
   return (
     <>
-        <div className="w-full">
+        <div className="w-full overflow-x-hidden">
         <section className="relative w-full bg-hero-gradient" id="hero">
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-16 md:py-20">
@@ -187,7 +187,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <Image src={image1} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl p-10" data-ai-hint="team working" />
+                <Image src={image1} alt="Why Choose Us" width={600} height={600} className="rounded-lg shadow-2xl p-4 sm:p-10" data-ai-hint="team working" />
               </div>
               <div className="space-y-8">
                 <div className="text-left space-y-4">
@@ -261,7 +261,7 @@ export const HomeUI: React.FC<HomeUIProps> = ({ image1, image2, image3, image4, 
                 align: "start",
                 loop: true,
               }}
-              className="w-full"
+              className="w-full max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto"
             >
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
